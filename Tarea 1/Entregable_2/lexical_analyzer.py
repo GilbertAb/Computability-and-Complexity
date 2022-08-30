@@ -7,10 +7,14 @@
 import ply.lex as lex
 
 # List of token names.   This is always required
-tokens = ()
+tokens = (
+    'STATE_OPEN',
+    'STATE_CLOSE',
+)
 
 # Regular expression rules for simple tokens
-
+t_STATE_OPEN = r'<state>'
+t_STATE_CLOSE = r'</state>'
 
 # A regular expression rule with some action code
 
@@ -34,7 +38,7 @@ lexer = lex.lex()
 # Read the file
 lines = []
 def open_file(filename):
-    data = open(filename, "r", encoding="UTF-8")
+    data = open(filename, "r")
     for line in data.readlines():
         lines.append(line.replace('\n', ''))
     with open (filename, "r") as filecontents:
