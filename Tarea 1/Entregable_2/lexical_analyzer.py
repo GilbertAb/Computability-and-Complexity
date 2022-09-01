@@ -12,6 +12,7 @@ tokens = (
     'COUNTRY_CLOSE',
     'LINK_OPEN',
     'LINK_CLOSE',
+    'LINK',
     'STATE_OPEN',
     'STATE_CLOSE',
     'POSTED_OPEN',
@@ -29,6 +30,9 @@ t_STATE_CLOSE = r'</state>'
 t_POSTED_OPEN = r'<posted>'
 t_POSTED_CLOSE = r'</posted>'
 # A regular expression rule with some action code
+def t_LINK(t):
+     r'"https://[\w\d@:%\._\\+#?&//=]{2,256}\.html"'
+     return t
 def t_POSTED(t):
      r'(\s)*(\t)*\d{1,2}\/\d{1,2}\/\d{1,2}(\s)*(\t)*'
      return t
