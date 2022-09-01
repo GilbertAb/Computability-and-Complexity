@@ -10,6 +10,22 @@ import ply.lex as lex
 tokens = (
   'STATE_OPEN',
   'STATE_CLOSE',
+    'SHAPELISTOPEN',#ERICK   
+    'SHAPEOPEN',  #ERICK
+    'SHAPECLOSED',#ERICK
+    'SHAPELISTCLOSED',#ERICK   
+    'SHAPE',      #ERICK
+    'EVENTOPEN',  #ERICK
+    'EVENTCLOSED',#ERICK
+    'CITYOPEN',   #ERICK
+    'CITYCLOSED', #ERICK
+    'CITY',       #ERICK
+    'SUMMARYOPEN', #ERICK
+    'SUMMARYCLOSED',#ERICK
+    'SUMMARY', #ERICK
+    'DURATIONOPEN', #ERICK
+    'DURATIONCLOSED',#ERICK
+    'DURATION', #ERICK
   'STATESLIST_OPEN',
   'STATESLIST_CLOSE',
   'SHAPE_OPEN',
@@ -23,6 +39,18 @@ tokens = (
 # Regular expression rules for simple tokens
 t_STATE_OPEN = r'<state>'
 t_STATE_CLOSE = r'</state>'
+t_SHAPELISTOPEN = r'<shape_list>'#ERICK 
+t_SHAPEOPEN = r'<shape>'#ERICK 
+t_SHAPECLOSED = r'</shape>' #ERICK
+t_SHAPELISTCLOSED= r'</shape_list>'#ERICK 
+t_EVENTOPEN = r'<event>' #ERICK
+t_EVENTCLOSED = r'</event>' #ERICK
+t_CITYOPEN = r'<city>' #ERICK
+t_CITYCLOSED = r'</city>' #ERICK
+t_SUMMARYOPEN = r'<summary>' #ERICK
+t_SUMMARYCLOSED = r'</summary>' #ERICK
+t_DURATIONOPEN = r'<duration>' #ERICK
+t_DURATIONCLOSED = r'</duration>' #ERICK
 t_STATESLIST_OPEN = r'<states_list>'
 t_STATESLIST_CLOSE = r'</states_list>'
 t_EVENTDATE_OPEN = r'<_date>'
@@ -33,7 +61,21 @@ t_IMAGES_OPEN = r'<images>'
 t_IMAGES_CLOSE = r'</images>'
 
 # A regular expression rule with some action code
+def t_SHAPE(t):
+     r'(?<=<shape>).[^</]+'
+     return t   
 
+def t_CITY(t):
+     r'(?<=<city>).[^</]+'
+     return t 
+ 
+def t_SUMMARY(t):
+     r'(?<=<summary>).[^</]+'
+     return t   
+
+def t_DURATION(t):
+     r'(?<=<duration>).[^</]+'
+     return t          
 def t_DATE(t):
   r'^(0[1-9]|1[012]|[1-9])\/([012][0-9]|3[01]|[1-9])\/(0[1-9]|[1-9][0-9])$'
   return t
