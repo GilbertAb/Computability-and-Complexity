@@ -15,7 +15,8 @@ tokens = (
     'STATE_OPEN',
     'STATE_CLOSE',
     'POSTED_OPEN',
-    'POSTED_CLOSE'
+    'POSTED_CLOSE',
+    'POSTED'
 )
 
 # Regular expression rules for simple tokens
@@ -28,7 +29,9 @@ t_STATE_CLOSE = r'</state>'
 t_POSTED_OPEN = r'<posted>'
 t_POSTED_CLOSE = r'</posted>'
 # A regular expression rule with some action code
-
+def t_POSTED(t):
+     r'(\s)*(\t)*\d{1,2}\/\d{1,2}\/\d{1,2}(\s)*(\t)*'
+     return t
 
 # Define a rule so we can track line numbers
 def t_newline(t):
@@ -56,8 +59,8 @@ def open_file(filename):
         data = filecontents.read().replace('\n', ' ')
     return data
 
-#data = open_file("UFO_Report_2022.xml")
-data = ''' '''
+data = open_file("./UFO_Report_2022.xml")
+#data = ''' '''
 # Give the lexer some input
 lexer.input(data)
  
