@@ -10,6 +10,8 @@ import ply.lex as lex
 tokens = (
     'COUNTRY_OPEN',
     'COUNTRY_CLOSE',
+    'LINK_OPEN',
+    'LINK_CLOSE',
     'STATE_OPEN',
     'STATE_CLOSE',
     'POSTED_OPEN',
@@ -19,6 +21,8 @@ tokens = (
 # Regular expression rules for simple tokens
 t_COUNTRY_OPEN = r'<country>'
 t_COUNTRY_CLOSE = r'</country>'
+t_LINK_OPEN = r'<link>'
+t_LINK_CLOSE = r'</link>'
 t_STATE_OPEN = r'<state>'
 t_STATE_CLOSE = r'</state>'
 t_POSTED_OPEN = r'<posted>'
