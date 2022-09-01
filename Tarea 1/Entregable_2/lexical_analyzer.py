@@ -8,32 +8,34 @@ import ply.lex as lex
 
 # List of token names.   This is always required
 tokens = (
-    'COUNTRY_OPEN',
-    'COUNTRY_CLOSE',
-    'LINK_OPEN',
-    'LINK_CLOSE',
-    'LINK',
+  'COUNTRY_OPEN',
+  'COUNTRY_CLOSE',
+  'COUNTRY',
+  'LINK_OPEN',
+  'LINK_CLOSE',
+  'LINK',
   'STATE_OPEN',
   'STATE_CLOSE',
-    'POSTED_OPEN',
-    'POSTED_CLOSE',
-    'POSTED'
-    'SHAPELISTOPEN',#ERICK   
-    'SHAPEOPEN',  #ERICK
-    'SHAPECLOSED',#ERICK
-    'SHAPELISTCLOSED',#ERICK   
-    'SHAPE',      #ERICK
-    'EVENTOPEN',  #ERICK
-    'EVENTCLOSED',#ERICK
-    'CITYOPEN',   #ERICK
-    'CITYCLOSED', #ERICK
-    'CITY',       #ERICK
-    'SUMMARYOPEN', #ERICK
-    'SUMMARYCLOSED',#ERICK
-    'SUMMARY', #ERICK
-    'DURATIONOPEN', #ERICK
-    'DURATIONCLOSED',#ERICK
-    'DURATION', #ERICK
+  'STATE',
+  'POSTED_OPEN',
+  'POSTED_CLOSE',
+  'POSTED',
+  'SHAPELISTOPEN',#ERICK   
+  'SHAPEOPEN',  #ERICK
+  'SHAPECLOSED',#ERICK
+  'SHAPELISTCLOSED',#ERICK   
+  'SHAPE',      #ERICK
+  'EVENTOPEN',  #ERICK
+  'EVENTCLOSED',#ERICK
+  'CITYOPEN',   #ERICK
+  'CITYCLOSED', #ERICK
+  'CITY',       #ERICK
+  'SUMMARYOPEN', #ERICK
+  'SUMMARYCLOSED',#ERICK
+  'SUMMARY', #ERICK
+  'DURATIONOPEN', #ERICK
+  'DURATIONCLOSED',#ERICK
+  'DURATION', #ERICK
   'STATESLIST_OPEN',
   'STATESLIST_CLOSE',
   'SHAPE_OPEN',
@@ -42,6 +44,10 @@ tokens = (
   'EVENTDATE_CLOSE',
   'IMAGES_OPEN',
   'IMAGES_CLOSE',
+  'IMAGES',
+  'TIME_OPEN',
+  'TIME_CLOSE',
+  'TIME',
 )
 
 # Regular expression rules for simple tokens
@@ -65,41 +71,58 @@ t_DURATIONOPEN = r'<duration>' #ERICK
 t_DURATIONCLOSED = r'</duration>' #ERICK
 t_STATESLIST_OPEN = r'<states_list>'
 t_STATESLIST_CLOSE = r'</states_list>'
-t_EVENTDATE_OPEN = r'<_date>'
+t_EVENTDATE_OPEN = r'<date>'
 t_EVENTDATE_CLOSE = r'</date>'
-t_DURATION_OPEN = r'<duration>'
-t_DURATION_CLOSE = r'</duration>'
 t_IMAGES_OPEN = r'<images>'
 t_IMAGES_CLOSE = r'</images>'
 t_POSTED_OPEN = r'<posted>'
 t_POSTED_CLOSE = r'</posted>'
+t_TIME_OPEN = r'<time>'
+t_TIME_CLOSE = r'</time>'
+
 # A regular expression rule with some action code
+
+def t_SUMMARY(t):
+  r'(?<=<summary>).[^<]+'
+  return t
+
+def t_COUNTRY(t):
+  r'(?<=<country>).[^<]+'
+  return t
+
+def t_STATE(t):
+  r'(?<=<state>).[^<]+'
+  return t
+
 def t_SHAPE(t):
-     r'(?<=<shape>).[^</]+'
-     return t   
+  r'(?<=<shape>).[^<]+'
+  return t   
 
 def t_CITY(t):
-     r'(?<=<city>).[^</]+'
-     return t 
- 
-def t_SUMMARY(t):
-     r'(?<=<summary>).[^</]+'
-     return t   
+  r'(?<=<city>)[^<]+'
+  return t 
 
 def t_DURATION(t):
-     r'(?<=<duration>).[^</]+'
-     return t          
+  r'(?<=<duration>).[^<]+'
+  return t          
+
 def t_DATE(t):
   r'^(0[1-9]|1[012]|[1-9])\/([012][0-9]|3[01]|[1-9])\/(0[1-9]|[1-9][0-9])$'
   return t
+
+def t_TIME(t):
+  r'(Unknown|\d{2}:\d{2})'
+
 def t_LINK(t):
-     r'"https://[\w\d@:%\._\\+#?&//=]{2,256}\.html"'
-     return t
+  r'https://[\w\d@:%\._\\+#?&//=]{2,256}\.html'
+  return t
+
 def t_POSTED(t):
-     r'(\s)*(\t)*\d{1,2}\/\d{1,2}\/\d{1,2}(\s)*(\t)*'
-     return t
+  r'(\s)*(\t)*\d{1,2}\/\d{1,2}\/\d{1,2}(\s)*(\t)*'
+  return t
+
 def t_IMAGES(t):
-  r'^(Yes|No)$'
+  r'(Yes|No)'
   return t
 
 # Define a rule so we can track line numbers
@@ -128,7 +151,7 @@ def open_file(filename):
     data = filecontents.read().replace('\n', ' ')
   return data
 
-data = open_file("UFO_Report_Test.xml")
+data = open_file("UFO_Report_2022.xml")
 
 # Give the lexer some input
 lexer.input(data)
