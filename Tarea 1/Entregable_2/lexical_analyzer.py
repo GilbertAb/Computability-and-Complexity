@@ -10,12 +10,15 @@ import ply.lex as lex
 tokens = (
     'STATE_OPEN',
     'STATE_CLOSE',
+    'POSTED_OPEN',
+    'POSTED_CLOSE'
 )
 
 # Regular expression rules for simple tokens
 t_STATE_OPEN = r'<state>'
 t_STATE_CLOSE = r'</state>'
-
+t_POSTED_OPEN = r'<posted>'
+t_POSTED_CLOSE = r'</posted>'
 # A regular expression rule with some action code
 
 
