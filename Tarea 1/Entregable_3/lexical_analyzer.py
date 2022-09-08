@@ -40,8 +40,9 @@ tokens = (
   'STATESLIST_CLOSE',
   'SHAPE_OPEN',
   'SHAPE_CLOSE',
-  'EVENTDATE_OPEN',
-  'EVENTDATE_CLOSE',
+  'DATE_OPEN',
+  'DATE_CLOSE',
+  'DATE',
   'IMAGES_OPEN',
   'IMAGES_CLOSE',
   'IMAGES',
@@ -71,8 +72,8 @@ t_DURATIONOPEN = r'<duration>' #ERICK
 t_DURATIONCLOSED = r'</duration>' #ERICK
 t_STATESLIST_OPEN = r'<states_list>'
 t_STATESLIST_CLOSE = r'</states_list>'
-t_EVENTDATE_OPEN = r'<date>'
-t_EVENTDATE_CLOSE = r'</date>'
+t_DATE_OPEN = r'<date>'
+t_DATE_CLOSE = r'</date>'
 t_IMAGES_OPEN = r'<images>'
 t_IMAGES_CLOSE = r'</images>'
 t_POSTED_OPEN = r'<posted>'
@@ -83,7 +84,7 @@ t_TIME_CLOSE = r'</time>'
 # A regular expression rule with some action code
 
 def t_SUMMARY(t):
-  r'(?<=<summary>).[^<]+'
+  r'(?<=<summary>).[^<]*'
   return t
 
 def t_COUNTRY(t):
@@ -103,11 +104,11 @@ def t_CITY(t):
   return t 
 
 def t_DURATION(t):
-  r'(?<=<duration>).[^<]+'
+  r'(?<=<duration>).[^<]*'
   return t          
 
 def t_DATE(t):
-  r'^(0[1-9]|1[012]|[1-9])\/([012][0-9]|3[01]|[1-9])\/(0[1-9]|[1-9][0-9])$'
+  r'(?<=<date>).[^<]*'
   return t
 
 def t_TIME(t):
@@ -135,6 +136,7 @@ t_ignore  = ' \t'
  
 # Error handling rule
 def t_error(t):
+  f.write("Illegal character '%s'" % t.value[0])
   print("Illegal character '%s'" % t.value[0])
   t.lexer.skip(1)
 
@@ -153,6 +155,8 @@ def open_file(filename):
 
 data = open_file("UFO_Report_2022.xml")
 
+f = open("results.txt", "a")
+
 # Give the lexer some input
 lexer.input(data)
  
@@ -161,4 +165,6 @@ while True:
   tok = lexer.token()
   if not tok: 
     break      # No more input
-  print(tok)
+  f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
+  #print(tok)
+f.close()
