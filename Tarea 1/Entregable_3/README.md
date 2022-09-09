@@ -12,7 +12,7 @@ El archivo consta de tres partes divididas claramente:
 
 2. Lista de formas: Consiste en una lista de las formas de los OVNIS que han sido reportadas.
 
-3. Lista de eventos: Es la lista más larga y compleja. Consiste en una lista de cada uno de los eventos (avistamientos) que han sido reportados. Se divide en diversos tipos de datos del reporte como lugar, hora, entre otros. Además provee un link donde se puede ver la descripción completa del suceso.
+3. Lista de eventos: Es la lista más larga y compleja. Consiste en una lista de cada uno de los eventos (avistamientos) que han sido reportados. Se divide en diversos tipos de datos del reporte como lugar, hora, entre otros. Además, provee un link donde se puede ver la descripción completa del suceso.
 
 > Cada una de las etiquetas que están en el archivo XML tienen una etiqueta de apertura **_<ejemplo\>_** y una etiqueta de cierre **_</ejemplo\>_**.
 
@@ -35,7 +35,7 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
 
     ![Complex_regular_expressions](Imagenes/Complex_regular_expressions.png)
 
-  + Lectura del archivo XML: Esta parte consta de una función para la apertura del archivo XML y su respectiva lectura línea por línea para su respectivo análisis.
+  + Lectura del archivo XML: Esta parte consta de una función para la apertura del archivo XML y su debida lectura línea por línea para su posterior análisis.
 
     ![XML_Reading](Imagenes/XML_Reading.png)
 
@@ -43,11 +43,15 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
 
     ![Tokenizing&Printing](Imagenes/Tokenizing&Printing.png)
 
++ B) Funcionalidad:
+
+  Lo que el programa es capaz de realizar, incluye la lectura del archivo XML, la separación de su contenido en los tokens correspondientes y su posterior impresión para una mejor visualización de su funcionamiento.
+
 ## **Ejecución del programa**
 
-Para poder ejecutar el programa y ver la respectiva salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Además, es necesario hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los respectivos analizadores léxico (lexer) y sintáctico a utilizar.
+Para poder ejecutar el programa y ver su salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Además, es necesario hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los analizadores léxico (lexer) y sintáctico a utilizar.
 
-Para la respectiva ejecución, hay que ubicarse en la carpeta que contiene el archivo _.py_ y simplemente hay que escribir el siguiente comando:
+Para la ejecución del programa, hay que ubicarse en la carpeta que contiene el archivo _.py_ y simplemente hay que escribir el siguiente comando:
 
 `py lexical_analyzer.py`
 
