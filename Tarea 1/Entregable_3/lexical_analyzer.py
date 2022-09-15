@@ -150,6 +150,10 @@ def p_posted_element(t):
 def p_duration_element(t):
   'duration_element : DURATION_OPEN DURATION DURATION_CLOSE'
 
+def p_state_element(t):
+  'state_element : STATE_OPEN STATE STATE_CLOSE'
+
+
 # Read the file
 lines = []
 def open_file(filename):
