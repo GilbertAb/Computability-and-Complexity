@@ -152,7 +152,7 @@ def p_stateslist_element(t):
   | STATE_OPEN STATE STATE_CLOSE'''
 
 def p_time_element(t):
-  '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME TIME_CLOSE'''
+  '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME_CLOSE'''
 
 def p_country_element(t):
   '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE | COUNTRY_OPEN COUNTRY_CLOSE'''
