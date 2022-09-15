@@ -144,6 +144,22 @@ lexer = lex.lex()
 # Parsing rules
   # precedence = ()
 
+def p_states_list(t):
+  '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
+
+def p_stateslist_element(t):
+  '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
+  | STATE_OPEN STATE STATE_CLOSE'''
+
+def p_time_element(t):
+  '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME TIME_CLOSE'''
+
+def p_country_element(t):
+  '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE | COUNTRY_OPEN COUNTRY_CLOSE'''
+
+def p_summary_element(t):
+  '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE | SUMMARY_OPEN SUMMARY_CLOSE'''
+
 def p_posted_element(t):
   '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE
                     | POSTED_OPEN POSTED_CLOSE'''
