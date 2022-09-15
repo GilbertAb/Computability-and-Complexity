@@ -166,6 +166,8 @@ def p_summary_element(t):
 def p_posted_element(t):
   'posted_element : POSTED_OPEN POSTED POSTED_CLOSE'
 
+def p_duration_element(t):
+  'duration_element : DURATION_OPEN DURATION DURATION_CLOSE'
 
 # Read the file
 lines = []
