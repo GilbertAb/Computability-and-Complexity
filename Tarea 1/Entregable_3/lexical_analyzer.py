@@ -152,13 +152,16 @@ def p_stateslist_element(t):
   | STATE_OPEN STATE STATE_CLOSE'''
 
 def p_time_element(t):
-  '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME TIME_CLOSE'''
+  '''time_element : TIME_OPEN TIME TIME_CLOSE 
+                  | TIME_OPEN TIME_CLOSE'''
 
 def p_country_element(t):
-  '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE | COUNTRY_OPEN COUNTRY_CLOSE'''
+  '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE 
+                      | COUNTRY_OPEN COUNTRY_CLOSE'''
 
 def p_summary_element(t):
-  '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE | SUMMARY_OPEN SUMMARY_CLOSE'''
+  '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE 
+                      | SUMMARY_OPEN SUMMARY_CLOSE'''
 
 def p_posted_element(t):
   '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE
@@ -180,6 +183,9 @@ def p_link_element(t):
   '''link_element : LINK_OPEN LINK LINK_CLOSE
                   | LINK_OPEN LINK_CLOSE'''
 
+def p_error(t):
+    print("Syntax error at '%s'" % t[0].value)
+
 # Read the file
 lines = []
 def open_file(filename):
@@ -190,13 +196,15 @@ def open_file(filename):
     data = filecontents.read().replace('\n', ' ')
   return data
 
-data = open_file("UFO_Report_2022.xml")
+#data = open_file("UFO_Report_2022.xml")
+data = open_file("UFO.xml")
 
 f = open("results.txt", "a")
 
 # Give the lexer some input
 lexer.input(data)
- 
+
+
 # Tokenize
 while True:
   tok = lexer.token()
@@ -204,4 +212,9 @@ while True:
     break      # No more input
   f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
   #print(tok)
+
+import ply.yacc as yacc
+parser = yacc.yacc()
+parser.parse(data)
+
 f.close()
