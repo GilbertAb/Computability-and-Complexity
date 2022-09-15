@@ -20,26 +20,24 @@ tokens = (
   'POSTED_OPEN',
   'POSTED_CLOSE',
   'POSTED',
-  'SHAPELISTOPEN',#ERICK   
-  'SHAPEOPEN',  #ERICK
-  'SHAPECLOSED',#ERICK
-  'SHAPELISTCLOSED',#ERICK   
+  'SHAPELIST_OPEN',#ERICK   
+  'SHAPE_OPEN',  #ERICK
+  'SHAPE_CLOSE',#ERICK
+  'SHAPELIST_CLOSE',#ERICK   
   'SHAPE',      #ERICK
-  'EVENTOPEN',  #ERICK
-  'EVENTCLOSED',#ERICK
-  'CITYOPEN',   #ERICK
-  'CITYCLOSED', #ERICK
+  'EVENT_OPEN',  #ERICK
+  'EVENT_CLOSE',#ERICK
+  'CITY_OPEN',   #ERICK
+  'CITY_CLOSE', #ERICK
   'CITY',       #ERICK
-  'SUMMARYOPEN', #ERICK
-  'SUMMARYCLOSED',#ERICK
+  'SUMMARY_OPEN', #ERICK
+  'SUMMARY_CLOSE',#ERICK
   'SUMMARY', #ERICK
-  'DURATIONOPEN', #ERICK
-  'DURATIONCLOSED',#ERICK
+  'DURATION_OPEN', #ERICK
+  'DURATION_CLOSE',#ERICK
   'DURATION', #ERICK
   'STATESLIST_OPEN',
   'STATESLIST_CLOSE',
-  'SHAPE_OPEN',
-  'SHAPE_CLOSE',
   'DATE_OPEN',
   'DATE_CLOSE',
   'DATE',
@@ -58,18 +56,18 @@ t_LINK_OPEN = r'<link>'
 t_LINK_CLOSE = r'</link>'
 t_STATE_OPEN = r'<state>'
 t_STATE_CLOSE = r'</state>'
-t_SHAPELISTOPEN = r'<shape_list>'#ERICK 
-t_SHAPEOPEN = r'<shape>'#ERICK 
-t_SHAPECLOSED = r'</shape>' #ERICK
-t_SHAPELISTCLOSED= r'</shape_list>'#ERICK 
-t_EVENTOPEN = r'<event>' #ERICK
-t_EVENTCLOSED = r'</event>' #ERICK
-t_CITYOPEN = r'<city>' #ERICK
-t_CITYCLOSED = r'</city>' #ERICK
-t_SUMMARYOPEN = r'<summary>' #ERICK
-t_SUMMARYCLOSED = r'</summary>' #ERICK
-t_DURATIONOPEN = r'<duration>' #ERICK
-t_DURATIONCLOSED = r'</duration>' #ERICK
+t_SHAPELIST_OPEN = r'<shape_list>'#ERICK 
+t_SHAPE_OPEN = r'<shape>'#ERICK 
+t_SHAPE_CLOSE = r'</shape>' #ERICK
+t_SHAPELIST_CLOSE= r'</shape_list>'#ERICK 
+t_EVENT_OPEN = r'<event>' #ERICK
+t_EVENT_CLOSE = r'</event>' #ERICK
+t_CITY_OPEN = r'<city>' #ERICK
+t_CITY_CLOSE = r'</city>' #ERICK
+t_SUMMARY_OPEN = r'<summary>' #ERICK
+t_SUMMARY_CLOSE = r'</summary>' #ERICK
+t_DURATION_OPEN = r'<duration>' #ERICK
+t_DURATION_CLOSE = r'</duration>' #ERICK
 t_STATESLIST_OPEN = r'<states_list>'
 t_STATESLIST_CLOSE = r'</states_list>'
 t_DATE_OPEN = r'<date>'
@@ -142,6 +140,25 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
+
+# Parsing rules
+  # precedence = ()
+
+def p_states_list(t):
+  '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
+
+def p_stateslist_element(t):
+  '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
+  | STATE_OPEN STATE STATE_CLOSE'''
+
+def p_time_element(t):
+  '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME TIME_CLOSE'''
+
+def p_country_element(t):
+  '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE | COUNTRY_OPEN COUNTRY_CLOSE'''
+
+def p_summary_element(t):
+  '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE | SUMMARY_OPEN SUMMARY_CLOSE'''
 
 # Read the file
 lines = []
