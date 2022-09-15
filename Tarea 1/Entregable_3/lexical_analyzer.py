@@ -164,24 +164,24 @@ def p_summary_element(t):
   # precedence = ()
 
 def p_posted_element(t):
-  '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE posted_element
-                    | POSTED_OPEN POSTED POSTED_CLOSE'''
+  '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE
+                    | POSTED_OPEN POSTED_CLOSE'''
 
 def p_duration_element(t):
-  '''duration_element : DURATION_OPEN DURATION DURATION_CLOSE duration_element
-                      | DURATION_OPEN DURATION DURATION_CLOSE'''
+  '''duration_element : DURATION_OPEN DURATION DURATION_CLOSE
+                      | DURATION_OPEN DURATION_CLOSE'''
 
 def p_state_element(t):
-  '''state_element : STATE_OPEN STATE STATE_CLOSE state_element
-                    | STATE_OPEN STATE STATE_CLOSE'''
+  '''state_element : STATE_OPEN STATE STATE_CLOSE
+                    | STATE_OPEN STATE_CLOSE'''
 
 def p_date_element(t):
-  '''date_element : DATE_OPEN DATE DATE_CLOSE date_element
-                  | DATE_OPEN DATE DATE_CLOSE'''
+  '''date_element : DATE_OPEN DATE DATE_CLOSE
+                  | DATE_OPEN DATE_CLOSE'''
 
 def p_link_element(t):
-  '''link_element : LINK_OPEN LINK LINK_CLOSE link_element
-                  | LINK_OPEN LINK LINK_CLOSE'''
+  '''link_element : LINK_OPEN LINK LINK_CLOSE
+                  | LINK_OPEN LINK_CLOSE'''
 
 # Read the file
 lines = []
