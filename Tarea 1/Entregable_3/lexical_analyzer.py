@@ -141,6 +141,13 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
+# Parsing rules
+  # precedence = ()
+
+def p_posted_element(t):
+  'posted_element : POSTED_OPEN POSTED POSTED_CLOSE'
+
+
 # Read the file
 lines = []
 def open_file(filename):
