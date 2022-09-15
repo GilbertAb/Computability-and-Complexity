@@ -160,9 +160,6 @@ def p_country_element(t):
 def p_summary_element(t):
   '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE | SUMMARY_OPEN SUMMARY_CLOSE'''
 
-# Parsing rules
-  # precedence = ()
-
 def p_posted_element(t):
   '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE
                     | POSTED_OPEN POSTED_CLOSE'''
