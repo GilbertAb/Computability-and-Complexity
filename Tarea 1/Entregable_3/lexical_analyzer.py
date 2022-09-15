@@ -151,6 +151,13 @@ def p_stateslist_element(t):
   '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
   | STATE_OPEN STATE STATE_CLOSE'''
 
+def p_shapes_list(t):
+  '''shapes_list: SHAPESLIST_OPEN shapeslist_element SHAPESLIST_CLOSE'''     
+
+def p_shapeslist_element(t):  
+  '''shapeslist_element: SHAPE_OPEN SHAPE SHAPE_CLOSE shapeslist_element'
+                       | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''   
+
 def p_time_element(t):
   '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME_CLOSE'''
 
@@ -179,6 +186,18 @@ def p_date_element(t):
 def p_link_element(t):
   '''link_element : LINK_OPEN LINK LINK_CLOSE
                   | LINK_OPEN LINK_CLOSE'''
+def p_images_element(t):
+  '''images_element : IMAGES_OPEN IMAGES IMAGES_CLOSE'
+                    | IMAGES_OPEN IMAGES_CLOSE'''
+
+def p_city_element(t):
+  '''city_element  : CITY_OPEN CITY CITY_CLOSE 
+                   | CITY_OPEN  CITY  CITY_CLOSE  '''
+
+
+def p_shape_element(t):
+  '''shape_element: SHAPE_OPEN  SHAPE SHAPE_CLOSE shape_element 
+                  | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''
 
 # Read the file
 lines = []
