@@ -164,13 +164,16 @@ def p_summary_element(t):
   # precedence = ()
 
 def p_posted_element(t):
-  'posted_element : POSTED_OPEN POSTED POSTED_CLOSE'
+  '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE posted_element
+                    | POSTED_OPEN POSTED POSTED_CLOSE'''
 
 def p_duration_element(t):
-  'duration_element : DURATION_OPEN DURATION DURATION_CLOSE'
+  '''duration_element : DURATION_OPEN DURATION DURATION_CLOSE duration_element
+                      | DURATION_OPEN DURATION DURATION_CLOSE'''
 
 def p_state_element(t):
-  'state_element : STATE_OPEN STATE STATE_CLOSE'
+  '''state_element : STATE_OPEN STATE STATE_CLOSE state_element
+                    | STATE_OPEN STATE STATE_CLOSE'''
 
 
 # Read the file
