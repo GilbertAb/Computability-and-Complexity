@@ -51,15 +51,15 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
 
   + Caso recursivo: Se da cuando una de las partes del código que se está analizando se llama recursivamente a sí mismo para seguir analizando sus partes. Un ejemplo sería el siguiente:  
     
-  >>> `stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element`  
+    `stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element`  
 
-  >> En este caso, el *stateslist_element* se llama recursivamente después de analizar el token de *STATE_CLOSE*, para verificar si hay más datos que analizar con una estructura similar a esa.
+    En este caso, el *stateslist_element* se llama recursivamente después de analizar el token de *STATE_CLOSE*, para verificar si hay más datos que analizar con una estructura similar a esa.
 
   + Caso no recursivo: Es el más simple de ambos, únicamente analiza la parte de código que le corresponde y finaliza esa parte de análisis porque terminó el mismo. Por ejemplo:          
 
-  >>> `time_element : TIME_OPEN TIME TIME_CLOSE`
+    `time_element : TIME_OPEN TIME TIME_CLOSE`
 
-  >> En este otro caso, al analizar las etiquetas correspondientes y leer el token *TIME_CLOSE*, finaliza el análisis de su parte.
+    En este otro caso, al analizar las etiquetas correspondientes y leer el token *TIME_CLOSE*, finaliza el análisis de su parte.
 ## **Ejecución del programa**
 
 Para poder ejecutar el programa y ver su salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Además, es necesario hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los analizadores léxico (lexer) y sintáctico a utilizar.
