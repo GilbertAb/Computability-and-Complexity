@@ -161,9 +161,6 @@ def p_event_a(t):
   shape_element duration_element summary_element posted_element images_element EVENT_CLOSE event
   | EVENT_OPEN link_element date_element time_element city_element state_element country_element \
   shape_element duration_element summary_element posted_element images_element EVENT_CLOSE'''
-  # dict_list.append(dictionary)
-  # dictionary = {}
-
 
 def p_states_list(t):
   '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
@@ -236,8 +233,8 @@ def p_images_element(t):
   '''images_element : IMAGES_OPEN IMAGES IMAGES_CLOSE
                     | IMAGES_OPEN IMAGES_CLOSE'''
   dictionary.setdefault(str(t[1]), str(t[2]))
-  dict_list.insert(0, dictionary)
-  # dictionary.clear()
+  dict_list.append(dictionary.copy())
+  dictionary.clear()
   # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
   # file_syntax.write("</event>\n\n")
 
@@ -286,6 +283,6 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 parser.parse(data)
 
-print(dict_list[0])
+print(dict_list)
 
 f.close()
