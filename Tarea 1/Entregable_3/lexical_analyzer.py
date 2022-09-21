@@ -111,6 +111,7 @@ def t_DATE(t):
 
 def t_TIME(t):
   r'(Unknown|\d{2}:\d{2})'
+  return t
 
 def t_LINK(t):
   r'https://[\w\d@:%\._\\+#?&//=]{2,256}\.html'
@@ -140,25 +141,120 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
+# A dictionaries list, with a dictionary for each event
+dict_list = []
+dictionary = {}
 
-# Parsing rules
-  # precedence = ()
+# File for the results
+file_syntax = open("syntax.txt", "a")
+
+def p_file(t):
+  '''file : states_list shapes_list events_list'''
+  file_syntax.write("File\n")
+
+def p_events_list(t):
+  '''events_list : event'''
+  file_syntax.write("Events_list\n")
+
+def p_event_a(t):
+  '''event : EVENT_OPEN link_element date_element time_element city_element state_element country_element \
+  shape_element duration_element summary_element posted_element images_element EVENT_CLOSE event
+  | EVENT_OPEN link_element date_element time_element city_element state_element country_element \
+  shape_element duration_element summary_element posted_element images_element EVENT_CLOSE'''
+  # dict_list.append(dictionary)
+  # dictionary = {}
+
 
 def p_states_list(t):
   '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
+  file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")
 
 def p_stateslist_element(t):
   '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
   | STATE_OPEN STATE STATE_CLOSE'''
+  file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
+
+def p_shapes_list(t):
+  '''shapes_list : SHAPELIST_OPEN shapeslist_element SHAPELIST_CLOSE'''
+  file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")     
+
+def p_shapeslist_element(t):  
+  '''shapeslist_element : SHAPE_OPEN SHAPE SHAPE_CLOSE shapeslist_element
+                       | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''   
+  file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
 
 def p_time_element(t):
-  '''time_element : TIME_OPEN TIME TIME_CLOSE | TIME_OPEN TIME TIME_CLOSE'''
+  '''time_element : TIME_OPEN TIME TIME_CLOSE 
+                  | TIME_OPEN TIME_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
 
 def p_country_element(t):
-  '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE | COUNTRY_OPEN COUNTRY_CLOSE'''
+  '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE 
+                      | COUNTRY_OPEN COUNTRY_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
 
 def p_summary_element(t):
-  '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE | SUMMARY_OPEN SUMMARY_CLOSE'''
+  '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE 
+                      | SUMMARY_OPEN SUMMARY_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_posted_element(t):
+  '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE
+                    | POSTED_OPEN POSTED_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_duration_element(t):
+  '''duration_element : DURATION_OPEN DURATION DURATION_CLOSE
+                      | DURATION_OPEN DURATION_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_state_element(t):
+  '''state_element : STATE_OPEN STATE STATE_CLOSE
+                    | STATE_OPEN STATE_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_date_element(t):
+  '''date_element : DATE_OPEN DATE DATE_CLOSE
+                  | DATE_OPEN DATE_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_link_element(t):
+  '''link_element : LINK_OPEN LINK LINK_CLOSE
+                  | LINK_OPEN LINK_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("<event>\n")
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_images_element(t):
+  '''images_element : IMAGES_OPEN IMAGES IMAGES_CLOSE
+                    | IMAGES_OPEN IMAGES_CLOSE'''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  dict_list.insert(0, dictionary)
+  # dictionary.clear()
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  # file_syntax.write("</event>\n\n")
+
+def p_city_element(t):
+  '''city_element  : CITY_OPEN CITY CITY_CLOSE 
+                   | CITY_OPEN  CITY_CLOSE  '''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_shape_element(t):
+  '''shape_element : SHAPE_OPEN  SHAPE SHAPE_CLOSE shape_element 
+                  | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  # file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+
+def p_error(t):
+    print("Syntax error at '%s'" % t[0].value)
 
 # Read the file
 lines = []
@@ -170,13 +266,14 @@ def open_file(filename):
     data = filecontents.read().replace('\n', ' ')
   return data
 
-data = open_file("UFO_Report_2022.xml")
+#data = open_file("UFO_Report_2022.xml")
+data = open_file("UFO.xml")
 
 f = open("results.txt", "a")
 
 # Give the lexer some input
 lexer.input(data)
- 
+
 # Tokenize
 while True:
   tok = lexer.token()
@@ -184,4 +281,11 @@ while True:
     break      # No more input
   f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
   #print(tok)
+
+import ply.yacc as yacc
+parser = yacc.yacc()
+parser.parse(data)
+
+print(dict_list[0])
+
 f.close()
