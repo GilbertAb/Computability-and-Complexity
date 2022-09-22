@@ -173,7 +173,7 @@ def p_event_a(t):
 def p_states_list(t):
   '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
   #file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")
-  states.append(t[2])
+  
 
 def p_stateslist_element(t):
   '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
