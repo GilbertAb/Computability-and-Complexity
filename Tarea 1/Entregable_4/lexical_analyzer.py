@@ -141,7 +141,11 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
+# A dictionaries list, with a dictionary for each event
+dict_list = []
+dictionary = {}
 
+# File for the results
 file_syntax = open("syntax.txt", "a")
 
 def p_file(t):
@@ -152,7 +156,7 @@ def p_events_list(t):
   '''events_list : event'''
   file_syntax.write("Events_list\n")
 
-def p_event(t):
+def p_event_a(t):
   '''event : EVENT_OPEN link_element date_element time_element city_element state_element country_element \
   shape_element duration_element summary_element posted_element images_element EVENT_CLOSE event
   | EVENT_OPEN link_element date_element time_element city_element state_element country_element \
@@ -179,59 +183,59 @@ def p_shapeslist_element(t):
 def p_time_element(t):
   '''time_element : TIME_OPEN TIME TIME_CLOSE 
                   | TIME_OPEN TIME_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_country_element(t):
   '''country_element : COUNTRY_OPEN COUNTRY COUNTRY_CLOSE 
                       | COUNTRY_OPEN COUNTRY_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_summary_element(t):
   '''summary_element : SUMMARY_OPEN SUMMARY SUMMARY_CLOSE 
                       | SUMMARY_OPEN SUMMARY_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_posted_element(t):
   '''posted_element : POSTED_OPEN POSTED POSTED_CLOSE
                     | POSTED_OPEN POSTED_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_duration_element(t):
   '''duration_element : DURATION_OPEN DURATION DURATION_CLOSE
                       | DURATION_OPEN DURATION_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_state_element(t):
   '''state_element : STATE_OPEN STATE STATE_CLOSE
                     | STATE_OPEN STATE_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_date_element(t):
   '''date_element : DATE_OPEN DATE DATE_CLOSE
                   | DATE_OPEN DATE_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_link_element(t):
   '''link_element : LINK_OPEN LINK LINK_CLOSE
                   | LINK_OPEN LINK_CLOSE'''
-  file_syntax.write("<event>\n")
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_images_element(t):
   '''images_element : IMAGES_OPEN IMAGES IMAGES_CLOSE
                     | IMAGES_OPEN IMAGES_CLOSE'''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
-  file_syntax.write("</event>\n\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
+  dict_list.append(dictionary.copy())
+  dictionary.clear()
 
 def p_city_element(t):
   '''city_element  : CITY_OPEN CITY CITY_CLOSE 
                    | CITY_OPEN  CITY_CLOSE  '''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_shape_element(t):
   '''shape_element : SHAPE_OPEN  SHAPE SHAPE_CLOSE shape_element 
                   | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''
-  file_syntax.write("\t" + str(t[1]) + "\n" + "\t\t" + str(t[2]) + "\n" + "\t" + t[3] + "\n")
+  dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_error(t):
     print("Syntax error at '%s'" % t[0].value)
@@ -265,5 +269,7 @@ while True:
 import ply.yacc as yacc
 parser = yacc.yacc()
 parser.parse(data)
+
+print(dict_list)
 
 f.close()
