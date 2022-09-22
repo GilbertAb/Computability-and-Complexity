@@ -1,4 +1,4 @@
-# Tarea Programada 1: Entregable 3
+# Tarea Programada 1: Entregable 4
 
 ## **Problema a resolver**
 
@@ -39,9 +39,17 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
 
     ![XML_Reading](Images/XML_Reading.png)
 
-  + Separar y generar la salida: Se separa cada etiqueta y su contenido en los tokens respectivos y se crea un archivo de salida de texto con el respectivo contenido de cada uno de ellos.
+  + Separar los tokens: En un ciclo, se separa cada etiqueta y su contenido en los tokens respectivos hasta que no haya más archivo que analizar
 
-    ![Tokenizing&Printing](Images/Tokenizing&Printing.png)
+    ![Tokenizing](Images/Tokenizing.png)
+
+  + Producciones: Son las reglas mediante las cuales el analizador sintáctico efectúa el respectivo análisis de los tokens y sus componentes
+
+    ![Productions](Images/Productions.png)
+
+  + Impresión: Se muestran la lista de estados, la lista de formas y, dentro de un ciclo, la lista de eventos generadas en el análisis sintáctico
+
+    ![Printing](Images/Printing.png)
 
 + B) Funcionalidad:
 
@@ -60,6 +68,27 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
     `time_element : TIME_OPEN TIME TIME_CLOSE`
 
     En este otro caso, al analizar las etiquetas correspondientes y leer el token *TIME_CLOSE*, finaliza el análisis de su parte.
+  
+  Una vez evaluado cada uno de los valores contenidos en el archivo _.xml_, se guarda el resultado de cada uno de los tokens en listas y listas de diccionarios. En el caso de *states_list* y *shape_list*, se usó una lista sencilla donde se guardaron todos los tokens de estados y formas posibles. Mientras tanto, en la lista de eventos se utilizó una lista de diccionarios, donde cada diccionario representa un evento del archivo _.xml_ con sus respectivas partes como _<\link>_, _<\date>_, _<\time>_, entre otros. 
+
+  En la siguiente imagen se puede ver la declaración de las respectivas listas para guardar los estados, las formas y los eventos:
+
+  ![lists_for_storing](Images/lists_for_storing.png)
+
+  Mientras tanto, en las siguientes imágenes se puede ver cómo se van guardando los respectivos tokens:
+
+  + ***<states_list>***
+
+   ![states_list](Images/states_list.png)
+
+   + ***<shape_list>***
+
+   ![shape_list](Images/shape_list.png)
+
+   + ***Lista de eventos***
+
+   ![events_list](Images/events_list.png)
+
 ## **Ejecución del programa**
 
 Para poder ejecutar el programa y ver su salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Además, es necesario hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los analizadores léxico (lexer) y sintáctico a utilizar.
@@ -72,7 +101,8 @@ O, su equivalente:
 
 `python lexical_analyzer.py`
 
-Cabe recalcar que para las pruebas del correcto funcionamiento del programa, existe un segundo archivo _.xml_ llamado ***UFO***, el cual tiene una parte pequeña del archivo de análisis original, esto con el fin de hacer más legible y entendible el análisis correspondiente. Además, el análisis de este archivo genera su respectivo archivo de salida llamado ***syntax.txt***
-### **Archivo de salida**
+Cabe recalcar que para las pruebas del correcto funcionamiento del programa, existe un segundo archivo _.xml_ llamado ***UFO***, el cual tiene una parte pequeña del archivo de análisis original, esto con el fin de hacer más legible y entendible el análisis correspondiente.
 
-Al efectuar la ejecución del programa detallada anteriormente, se va a generar un archivo de salida _.txt_ el cual va a mostrar una noción de cómo se está aplicando el análisis sintáctico de los tokens.
+### **Salida del programa**
+
+Al efectuar la ejecución del programa detallada anteriormente, se va a generar una salida en la terminal, donde se va a poder ver la lista con el valor de cada diccionario guardado en ella.
