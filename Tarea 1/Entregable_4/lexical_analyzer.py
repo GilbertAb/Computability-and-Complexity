@@ -140,7 +140,7 @@ t_ignore  = ' \t'
  
 # Error handling rule
 def t_error(t):
-  f.write("Illegal character '%s'" % t.value[0])
+  #f.write("Illegal character '%s'" % t.value[0])
   print("Illegal character '%s'" % t.value[0])
   t.lexer.skip(1)
 
@@ -154,15 +154,15 @@ dict_list = []
 dictionary = {}
 
 # File for the results
-file_syntax = open("syntax.txt", "a")
+#file_syntax = open("syntax.txt", "a")
 
 def p_file(t):
   '''file : states_list shapes_list events_list'''
-  file_syntax.write("File\n")
+  #file_syntax.write("File\n")
 
 def p_events_list(t):
   '''events_list : event'''
-  file_syntax.write("Events_list\n")
+  #file_syntax.write("Events_list\n")
 
 def p_event_a(t):
   '''event : EVENT_OPEN link_element date_element time_element city_element state_element country_element \
@@ -188,7 +188,7 @@ def p_shapes_list(t):
 def p_shapeslist_element(t):  
   '''shapeslist_element : SHAPE_OPEN SHAPE SHAPE_CLOSE shapeslist_element
                        | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''   
-  file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
+  #file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
   shapes.append(t[2])
 
 def p_time_element(t):
@@ -249,7 +249,7 @@ def p_shape_element(t):
   dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_error(t):
-    print("Syntax error at '%s'" % t[0].value)
+    print("Syntax error at '%s'")
 
 # Read the file
 lines = []
@@ -261,8 +261,8 @@ def open_file(filename):
     data = filecontents.read().replace('\n', ' ')
   return data
 
-#data = open_file("UFO_Report_2022.xml")
-data = open_file("UFO.xml")
+data = open_file("UFO_Report_2022.xml")
+#data = open_file("UFO.xml")
 
 f = open("results.txt", "a")
 
@@ -274,7 +274,7 @@ while True:
   tok = lexer.token()
   if not tok: 
     break      # No more input
-  f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
+  #f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
   #print(tok)
 
 import ply.yacc as yacc
@@ -283,8 +283,9 @@ parser.parse(data)
 
 f.close()
 
-print(states)
-print(shapes)
-print(dict_list)
+print("STATES LIST: ", states)
+print("SHAPES LIST: ", shapes)
+for event in dict_list:
+  print("EVENT: \n", event, "\n")
 
 f.close()
