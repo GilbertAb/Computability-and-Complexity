@@ -142,6 +142,14 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
+# List to store 
+STATES = []
+
+# A dictionaries list, with a dictionary for each event
+dict_list = []
+dictionary = {}
+
+# File for the results
 file_syntax = open("syntax.txt", "a")
 
 def p_file(t):
@@ -161,11 +169,13 @@ def p_event(t):
 def p_states_list(t):
   '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
   file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")
+  STATES.append(t[2])
 
 def p_stateslist_element(t):
   '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
   | STATE_OPEN STATE STATE_CLOSE'''
   file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
+  STATES.append(t[2])
 
 def p_shapes_list(t):
   '''shapes_list : SHAPELIST_OPEN shapeslist_element SHAPELIST_CLOSE'''
@@ -262,8 +272,17 @@ while True:
   f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
   #print(tok)
 
+#import ply.yacc as yacc
+#parser = yacc.yacc()
+#parser.parse(data)
+
+#f.close()
+
 import ply.yacc as yacc
 parser = yacc.yacc()
 parser.parse(data)
+
+print(STATES)
+print(dict_list)
 
 f.close()
