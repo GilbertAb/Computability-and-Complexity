@@ -6,6 +6,10 @@
 
 import ply.lex as lex
 
+# List to store shapes
+shapes = []
+
+
 # List of token names.   This is always required
 tokens = (
   'COUNTRY_OPEN',
@@ -175,6 +179,7 @@ def p_shapeslist_element(t):
   '''shapeslist_element : SHAPE_OPEN SHAPE SHAPE_CLOSE shapeslist_element
                        | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''   
   file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
+  shapes.append(t[2])
 
 def p_time_element(t):
   '''time_element : TIME_OPEN TIME TIME_CLOSE 
@@ -267,3 +272,5 @@ parser = yacc.yacc()
 parser.parse(data)
 
 f.close()
+
+print(shapes)
