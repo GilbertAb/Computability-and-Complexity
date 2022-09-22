@@ -8,6 +8,7 @@ import ply.lex as lex
 
 # List to store shapes
 shapes = []
+states = []
 
 
 # List of token names.   This is always required
@@ -145,6 +146,9 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
+
+
+
 # A dictionaries list, with a dictionary for each event
 dict_list = []
 dictionary = {}
@@ -168,16 +172,18 @@ def p_event_a(t):
 
 def p_states_list(t):
   '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
-  file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")
+  #file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")
+  states.append(t[2])
 
 def p_stateslist_element(t):
   '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
   | STATE_OPEN STATE STATE_CLOSE'''
-  file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
+  #file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
+  states.append(t[2])
 
 def p_shapes_list(t):
   '''shapes_list : SHAPELIST_OPEN shapeslist_element SHAPELIST_CLOSE'''
-  file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")     
+  #file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")     
 
 def p_shapeslist_element(t):  
   '''shapeslist_element : SHAPE_OPEN SHAPE SHAPE_CLOSE shapeslist_element
@@ -277,6 +283,7 @@ parser.parse(data)
 
 f.close()
 
+print(states)
 print(shapes)
 print(dict_list)
 
