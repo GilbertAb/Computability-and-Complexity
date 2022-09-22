@@ -105,4 +105,4 @@ Cabe recalcar que para las pruebas del correcto funcionamiento del programa, exi
 
 ### **Salida del programa**
 
-Al efectuar la ejecución del programa detallada anteriormente, se va a generar una salida en la terminal, donde se va a poder ver la lista con el valor de cada diccionario guardado en ella.
+Al efectuar la ejecución del programa detallada anteriormente, se va a generar una salida en la terminal, donde se va a poder ver la lista de estados, formas y cada evento con el valor de cada uno de sus componentes.
