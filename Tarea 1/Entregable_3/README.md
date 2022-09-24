@@ -14,7 +14,7 @@ El archivo consta de tres partes divididas claramente:
 
 3. Lista de eventos: Es la lista más larga y compleja. Consiste en una lista de cada uno de los eventos (avistamientos) que han sido reportados. Se divide en diversos tipos de datos del reporte como lugar, hora, entre otros. Además, provee un link donde se puede ver la descripción completa del suceso.
 
-> Cada una de las etiquetas que están en el archivo XML tienen una etiqueta de apertura **_<ejemplo\>_** y una etiqueta de cierre **_</ejemplo\>_**.
+Cada una de las etiquetas que están en el archivo XML tienen una etiqueta de apertura **_<ejemplo\>_** y una etiqueta de cierre **_</ejemplo\>_**.
 
 ## **Descripción de la solución**
 
@@ -25,28 +25,41 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
 + A) Formato:
   + Lista de tokens: Una lista de cada uno de los tokens que se van a desprender de las etiquetas y de los datos contenidos en el archivo XML. 
 
-    ![Tokens_list](Imagenes/Tokens_list.png)
+    ![Tokens_list](Images/Tokens_list.png)
 
   + Expresiones regulares simples: Son aquellas expresiones regulares que no pasan de una línea de extensión, las cuales analizan cada una de las etiquetas del archivo XML.
 
-    ![Simple_regular_expressions](Imagenes/Simple_regular_expressions.png)
+    ![Simple_regular_expressions](Images/Simple_regular_expressions.png)
 
   + Expresiones regulares complejas: Son expresiones regulares que tienen una densidad de análisis más amplia, usadas para extraer los datos contenidos en el interior de cada etiqueta de apertura y de cierre.
 
-    ![Complex_regular_expressions](Imagenes/Complex_regular_expressions.png)
+    ![Complex_regular_expressions](Images/Complex_regular_expressions.png)
 
   + Lectura del archivo XML: Esta parte consta de una función para la apertura del archivo XML y su debida lectura línea por línea para su posterior análisis.
 
-    ![XML_Reading](Imagenes/XML_Reading.png)
+    ![XML_Reading](Images/XML_Reading.png)
 
-  + Separar e imprimir: Se separa cada etiqueta y su contenido en los tokens respectivos y se muestra en la salida estándar su lectura y respectivo contenido de cada uno de ellos.
+  + Separar y generar la salida: Se separa cada etiqueta y su contenido en los tokens respectivos y se crea un archivo de salida de texto con el respectivo contenido de cada uno de ellos.
 
-    ![Tokenizing&Printing](Imagenes/Tokenizing&Printing.png)
+    ![Tokenizing&Printing](Images/Tokenizing&Printing.png)
 
 + B) Funcionalidad:
 
-  Lo que el programa es capaz de realizar, incluye la lectura del archivo XML, la separación de su contenido en los tokens correspondientes y su posterior impresión para una mejor visualización de su funcionamiento.
+  Lo que el programa es capaz de realizar incluye la lectura del archivo XML, la separación de su contenido en los tokens correspondientes, la creación de un archivo de salida y en análisis de los tokens correspondientes.
 
+  En el caso del análisis sintáctico, lo que el programa en este momento es capaz de hacer incluye el respectivo análisis de la estructura de los tokens, donde se van subdividiendo en partes más simples y triviales, en donde la solución de esa parte sea sencilla y rápida. En este análisis se pueden identificar dos casos:
+
+  + Caso recursivo: Se da cuando una de las partes del código que se está analizando se llama recursivamente a sí mismo para seguir analizando sus partes. Un ejemplo sería el siguiente:  
+    
+    `stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element`  
+
+    En este caso, el *stateslist_element* se llama recursivamente después de analizar el token de *STATE_CLOSE*, para verificar si hay más datos que analizar con una estructura similar a esa.
+
+  + Caso no recursivo: Es el más simple de ambos, únicamente analiza la parte de código que le corresponde y finaliza esa parte de análisis porque terminó el mismo. Por ejemplo:          
+
+    `time_element : TIME_OPEN TIME TIME_CLOSE`
+
+    En este otro caso, al analizar las etiquetas correspondientes y leer el token *TIME_CLOSE*, finaliza el análisis de su parte.
 ## **Ejecución del programa**
 
 Para poder ejecutar el programa y ver su salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Además, es necesario hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los analizadores léxico (lexer) y sintáctico a utilizar.
@@ -59,4 +72,7 @@ O, su equivalente:
 
 `python lexical_analyzer.py`
 
-Esto va a mostrar en la salida estándar la respectiva salida del programa.
+Cabe recalcar que para las pruebas del correcto funcionamiento del programa, existe un segundo archivo _.xml_ llamado ***UFO***, el cual tiene una parte pequeña del archivo de análisis original, esto con el fin de hacer más legible y entendible el análisis correspondiente. Además, el análisis de este archivo genera su respectivo archivo de salida llamado ***syntax.txt***
+### **Archivo de salida**
+
+Al efectuar la ejecución del programa detallada anteriormente, se va a generar un archivo de salida _.txt_ el cual va a mostrar una noción de cómo se está aplicando el análisis sintáctico de los tokens.
