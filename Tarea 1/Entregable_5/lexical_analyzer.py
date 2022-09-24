@@ -1,7 +1,7 @@
 # ------------------------------------------------------------
  # lexical_analyzer.py
  # Authors: Daniel López, Erick Chicas, Gilbert Márquez
- # tokenizer for a simple expression evaluator
+ # Lexical and syntactic analyzer for a xml file
  # ------------------------------------------------------------
 
 import ply.lex as lex
@@ -143,23 +143,17 @@ t_ignore  = ' \t'
  
 # Error handling rule
 def t_error(t):
-  #f.write("Illegal character '%s'" % t.value[0])
   print("Illegal character '%s'" % t.value[0])
   t.lexer.skip(1)
 
 # Build the lexer
 lexer = lex.lex()
 
-# File for the results
-#file_syntax = open("syntax.txt", "a")
-
 def p_file(t):
   '''file : states_list shapes_list events_list'''
-  #file_syntax.write("File\n")
 
 def p_events_list(t):
   '''events_list : event'''
-  #file_syntax.write("Events_list\n")
 
 def p_event_a(t):
   '''event : EVENT_OPEN link_element date_element time_element city_element state_element country_element \
@@ -169,22 +163,18 @@ def p_event_a(t):
 
 def p_states_list(t):
   '''states_list : STATESLIST_OPEN stateslist_element STATESLIST_CLOSE'''
-  #file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")
 
 def p_stateslist_element(t):
   '''stateslist_element : STATE_OPEN STATE STATE_CLOSE stateslist_element 
   | STATE_OPEN STATE STATE_CLOSE'''
-  #file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
   states.append(t[2])
 
 def p_shapes_list(t):
-  '''shapes_list : SHAPELIST_OPEN shapeslist_element SHAPELIST_CLOSE'''
-  #file_syntax.write(str(t[1]) + "\n" + t[3] + "\n\n")     
+  '''shapes_list : SHAPELIST_OPEN shapeslist_element SHAPELIST_CLOSE'''  
 
 def p_shapeslist_element(t):  
   '''shapeslist_element : SHAPE_OPEN SHAPE SHAPE_CLOSE shapeslist_element
                        | SHAPE_OPEN SHAPE SHAPE_CLOSE  '''   
-  #file_syntax.write(str(t[1]) + "\n" + "\t" + str(t[2]) + "\n" + t[3] + "\n")
   shapes.append(t[2])
 
 def p_time_element(t):
@@ -245,7 +235,7 @@ def p_shape_element(t):
   event_dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_error(t):
-    print("Syntax error at '%s'")
+  print("Syntax error at '%s'")
 
 # Read the file
 lines = []
@@ -258,9 +248,7 @@ def open_file(filename):
   return data
 
 data = open_file("UFO_Report_2022.xml")
-#data = open_file("UFO.xml")
-
-f = open("results.txt", "a")
+# data = open_file("UFO.xml")
 
 # Give the lexer some input
 lexer.input(data)
@@ -270,18 +258,21 @@ while True:
   tok = lexer.token()
   if not tok: 
     break      # No more input
-  #f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
-  #print(tok)
 
 import ply.yacc as yacc
 parser = yacc.yacc()
 parser.parse(data)
 
-f.close()
+# Files for the results
+file_states = open("states.txt", "w")
+file_shapes = open("shapes.txt", "w")
+file_events = open("events.txt", "w")
 
-print("STATES LIST: ", states)
-print("SHAPES LIST: ", shapes)
+file_states.write("STATES LIST: " + str(states))
+file_shapes.write("SHAPES LIST: " + str(shapes))
 for event in events_list:
-  print("EVENT: \n", event, "\n")
+  file_events.write("EVENT: \n" + str(event) + "\n")
 
-f.close()
+file_events.close()
+file_shapes.close()
+file_states.close()
