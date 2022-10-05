@@ -88,7 +88,6 @@ t_TIME_OPEN = r'<time>'
 t_TIME_CLOSE = r'</time>'
 
 # A regular expression rule with some action code
-
 def t_SUMMARY(t):
   r'(?<=<summary>).[^<]*'
   return t
@@ -233,6 +232,7 @@ def p_images_element(t):
   event_dictionary.setdefault(str(t[1]), str(t[2]))
   events_list.append(event_dictionary.copy())
   event_dictionary.clear()
+  print(len(events_list))
 
 def p_city_element(t):
   '''city_element  : CITY_OPEN CITY CITY_CLOSE 
@@ -245,7 +245,8 @@ def p_shape_element(t):
   event_dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_error(t):
-    print("Syntax error at '%s'")
+    #print("Syntax error at '%s'")
+    parser.errok()
 
 # Read the file
 lines = []
@@ -279,10 +280,10 @@ parser.parse(data)
 
 f.close()
 
-print("STATES LIST: ", states)
-print("SHAPES LIST: ", shapes)
-for event in events_list:
-  print("EVENT: \n", event, "\n")
+#print("STATES LIST: ", states)
+#print("SHAPES LIST: ", shapes)
+#for event in events_list:
+#  print("EVENT: \n", event, "\n")
 
 f.close()
 
@@ -295,7 +296,6 @@ for state in states:
   file_states.write(state.replace("'","") + ",")
 for shape in shapes:
   file_shapes.write(shape.replace("'","") + ",") 
-#file_shapes.write("SHAPES LIST: " + str(shapes))
 for event in events_list:
   for key, value in event.items():
     key = key.replace("<", "")
