@@ -119,23 +119,23 @@ Cabe recalcar que para las pruebas del correcto funcionamiento del programa, exi
 En el caso de Power BI, se le tiene que definir la entrada para el archivo, para la cual hay que especificarle la ruta y cada archivo _.txt_ generado por el programa de python y asignarlo a cada parte que ya está especificada en el archivo de Power BI (Esto solo se tiene que hacer la primera vez).
 Aquí se puede ver un paso a paso de esta especificación de la entrada para Power BI:
 
-+ Primer paso_: En la columna de la derecha donde dice _Fields_, se le da click derecho donde dice _events_
++ ***Primer paso:*** En la columna de la derecha donde dice _Fields_, se le da click derecho donde dice _events_
 
   ![First_step](Images/First_step.png)
 
-+ Segundo paso: En el menú despegable que se muestra, hay que seleccionar la opción que dice _Edit query_
++ ***Segundo paso:*** En el menú despegable que se muestra, hay que seleccionar la opción que dice _Edit query_
 
   ![Second_step](Images/Second_step.png)
 
-+ Tercer paso: En la parte izquierda de la pantalla, en la columna llamada _Queries_, se muestran los tres archivos que se están esperando, por lo que hay que ir uno por uno y efectuar los dos siguientes pasos:
++ ***Tercer paso:*** En la parte izquierda de la pantalla, en la columna llamada _Queries_, se muestran los tres archivos que se están esperando, por lo que hay que ir uno por uno y efectuar los dos siguientes pasos:
   
   ![Third_step](Images/Third_step.png)
 
-  + Cuarto paso: En la columna derecha, llamada _Applied steps_, hay que seleccionar la opción que dice _Source_.
+  + ***Cuarto paso:*** En la columna derecha, llamada _Applied steps_, hay que seleccionar la opción que dice _Source_.
   
     ![Fourth_step](Images/Fourth_step.png) 
 
-  + Quinto paso: En la ventada desplegada, se presiona el botón _browse_, el cual va a abrir el explorador de archivos para especificar el archivo a abrir para esa parte específica del archivo de Power BI.
+  + ***Quinto paso:*** En la ventada desplegada, se presiona el botón _browse_, el cual va a abrir el explorador de archivos para especificar el archivo a abrir para esa parte específica del archivo de Power BI.
   
     ![Fifth_step1](Images/Fifth_step1.png) 
     ![Fifth_step2](Images/Fifth_step2.png)
@@ -143,7 +143,7 @@ Aquí se puede ver un paso a paso de esta especificación de la entrada para Pow
   **Recordar que el cuarto y quinto paso se tienen que hacer para las tres partes: estados, formas y eventos.**  
   _Cabe recalcar también que las capturas fueron tomadas con Power BI en inglés, por lo que los nombres de las columnas y opciones puede variar._
 
-### **Salida del programa**
+## **Salida del programa**
 
 + Archivos de salida:
 
