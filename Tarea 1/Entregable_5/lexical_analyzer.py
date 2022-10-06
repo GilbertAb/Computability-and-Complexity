@@ -232,7 +232,6 @@ def p_images_element(t):
   event_dictionary.setdefault(str(t[1]), str(t[2]))
   events_list.append(event_dictionary.copy())
   event_dictionary.clear()
-  print(len(events_list))
 
 def p_city_element(t):
   '''city_element  : CITY_OPEN CITY CITY_CLOSE 
@@ -245,8 +244,13 @@ def p_shape_element(t):
   event_dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_error(t):
-    #print("Syntax error at '%s'")
+  if t:
+    print("Syntax error at token", t.type)
+    # Just discard the token and tell the parser it's okay.
     parser.errok()
+  else:
+    print("Syntax error at EOF")
+  #parser.errok()
 
 # Read the file
 lines = []
@@ -271,19 +275,10 @@ while True:
   tok = lexer.token()
   if not tok: 
     break      # No more input
-  #f.write(str(tok.value)+" | " +  str(tok.type) + "\n")
-  #print(tok)
 
 import ply.yacc as yacc
 parser = yacc.yacc()
 parser.parse(data)
-
-f.close()
-
-#print("STATES LIST: ", states)
-#print("SHAPES LIST: ", shapes)
-#for event in events_list:
-#  print("EVENT: \n", event, "\n")
 
 f.close()
 
@@ -302,6 +297,7 @@ for event in events_list:
     key = key.replace(">","")
     file_events.write(key.replace("'","") + "," + value.replace("'","") + ",")
   file_events.write("\n")
+
 file_events.close()
 file_shapes.close()
 file_states.close()
