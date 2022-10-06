@@ -4,6 +4,37 @@
  # tokenizer for a simple expression evaluator
  # ------------------------------------------------------------
 
+# States abbreviation
+states_abbreviation = {
+  "AL" : "ALABAMA",
+  "AK" : "ALASKA",  
+  "AZ" : "ARIZONA",
+  "AR" : "ARKANSAS",
+  "CA" : "CALIFORNIA",
+  "CO" : "COLORADO",
+  "CT" : "CONNECTICUT",
+  "DE" : "DELAWARE",
+  "DCO" : "DISTRICT OF COLUMBIA",
+  "FL" : "FLORIDA",
+  "GA" : "GEORGIA",
+  "HI" : "HAWAII",
+  "ID" : "IDAHO",
+  "IL" : "ILLINOIS",
+  "IN" : "INDIANA",
+  "IA" : "IOWA",
+  "KS" : "KANSAS",  
+  "KY" : "KENTUCKY",
+  "LA" : "LOUISIANA",
+  "ME" : "MAINE",
+  "MD" : "MARYLAND",
+  "MA" : "MASSACHUSETTS",
+  "MI" : "MICHIGAN", 
+  "MN" : "MINNESOTA",
+  "MS" : "MISSISSIPPI",
+  "MO" : "MISSOURI",
+  "MT" : "MONTANA"
+}
+
 import ply.lex as lex
 
 # List to store shapes
@@ -214,7 +245,12 @@ def p_duration_element(t):
 def p_state_element(t):
   '''state_element : STATE_OPEN STATE STATE_CLOSE
                     | STATE_OPEN STATE_CLOSE'''
-  event_dictionary.setdefault(str(t[1]), str(t[2]))
+  if states_abbreviation.get(str(t[2])) != None:
+    print(str(t[2]))
+    event_dictionary.setdefault(str(t[1]), states_abbreviation[str(t[2])])
+    print(event_dictionary)
+  else:
+    event_dictionary.setdefault(str(t[1]), str(t[2]))
 
 def p_date_element(t):
   '''date_element : DATE_OPEN DATE DATE_CLOSE
