@@ -32,7 +32,34 @@ states_abbreviation = {
   "MN" : "MINNESOTA",
   "MS" : "MISSISSIPPI",
   "MO" : "MISSOURI",
-  "MT" : "MONTANA"
+  "MT" : "MONTANA",
+  "NE" : "NEBRASKA",
+  "NV" : "NEVADA",
+  "NH" : "NEW HAMPSHIRE",
+  "NJ" : "NEW JERSEY",
+  "NM" : "NEW MEXICO",
+  "NY" : "NEW YORK",
+  "NC" : "NORTH CAROLINA",
+  "ND" : "NORTH DAKOTA",
+  "OH" : "OHIO",
+  "OK" : "OKLAHOMA",
+  "OR" : "OREGON",
+  "PA" : "PENNSYLVANIA",
+  "RI" : "RHODE ISLAND",
+  "SC" : "SOUTH CAROLINA",
+  "SD" : "SOUTH DAKOTA",
+  "TN" : "TENNESSEE",
+  "TX" : "TEXAS",
+  "UT" : "UTAH",
+  "VT" : "VERMONT",
+  "VA" : "VIRGINIA",
+  "WA" : "WASHINGTON",
+  "WV" : "WEST VIRGINIA",
+  "WI" : "WISCONSIN",
+  "WY" : "WYOMING",
+  "NS" : "NOVA SCOTIA",
+  "ON" : "ONTARIO",
+  "BC" : "BRITISH COLUMBIA",
 }
 
 import ply.lex as lex
@@ -246,9 +273,7 @@ def p_state_element(t):
   '''state_element : STATE_OPEN STATE STATE_CLOSE
                     | STATE_OPEN STATE_CLOSE'''
   if states_abbreviation.get(str(t[2])) != None:
-    print(str(t[2]))
     event_dictionary.setdefault(str(t[1]), states_abbreviation[str(t[2])])
-    print(event_dictionary)
   else:
     event_dictionary.setdefault(str(t[1]), str(t[2]))
 
@@ -301,8 +326,6 @@ def open_file(filename):
 data = open_file("UFO_Report_2022.xml")
 #data = open_file("UFO.xml")
 
-f = open("results.txt", "a")
-
 # Give the lexer some input
 lexer.input(data)
 
@@ -315,8 +338,6 @@ while True:
 import ply.yacc as yacc
 parser = yacc.yacc()
 parser.parse(data)
-
-f.close()
 
 # Files for the results
 file_states = open("states.txt", "w")
