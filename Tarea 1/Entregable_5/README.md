@@ -20,7 +20,7 @@ Cada una de las etiquetas que están en el archivo XML tienen una etiqueta de ap
 
 La solución consta de dos analizadores: uno léxico y otro sintáctico. El analizador léxico recibe como entrada el archivo XML y se encarga de leerlo línea por línea mientras va separándolo en tokens que ya fueron especificados en el programa, mediante expresiones regulares establecidas. Además, genera una salida la cual es la entrada del analizador sintáctico correspondiente. Este analizador sintáctico es el encargado de revisar cada uno de los tokens y darse cuenta de si cumplen o no las reglas que de igual forma se establecieron en el mismo programa. 
 
-Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalidades escaladamente. Para esta tercera etapa, se cuenta con archivo en código python, llamado ***lexical_analyzer.py*** en el que se cuenta con el siguiente formato y funcionalidades:
+Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalidades escaladamente. Para esta quinta etapa, se cuenta con archivo en código python, llamado ***lexical_analyzer.py*** en el que se cuenta con el siguiente formato y funcionalidades:
 
 + A) Formato:
 
@@ -104,7 +104,7 @@ Esta solución se divide en 5 etapas, en las cuales se van agregando funcionalid
 
 ## **Ejecución del programa**
 
-Para poder ejecutar el programa y ver su salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Es necesario también hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los analizadores léxico (lexer) y sintáctico a utilizar. Además de esto, para la salida gráfica del programa se necesita tener instalado _Power BI_ en el equipo donde va a ser ejecutado el programa (se puede descargar desde https://www.microsoft.com/en-us/download/details.aspx?id=58494), ya que es el encargado de generar las listas, gráficos y línea de tiempo de la información correspondiente.
+Para poder ejecutar el programa y ver su salida, es necesario tener alguna versión de python instalada en el sistema operativo en el cual va a hacer la ejecución. Es necesario también hacer la respectiva inclusión de la biblioteca _ply_ de python, la cual contiene los analizadores léxico (lexer) y sintáctico a utilizar. Además de esto, para la salida gráfica del programa se necesita tener instalado _Power BI_ en el equipo donde va a ser ejecutado el programa (se puede descargar [aquí](https://www.microsoft.com/en-us/download/details.aspx?id=58494)), ya que es el encargado de generar las listas, gráficos y línea de tiempo de la información correspondiente.
 
 Para la ejecución del programa, hay que ubicarse en la carpeta que contiene el archivo _.py_ y simplemente hay que escribir el siguiente comando:
 
@@ -117,41 +117,41 @@ O, su equivalente:
 Cabe recalcar que para las pruebas del correcto funcionamiento del programa, existe un segundo archivo _.xml_ llamado ***UFO***, el cual tiene una parte pequeña del archivo de análisis original, esto con el fin de hacer más legible y entendible el análisis correspondiente.
 
 En el caso de Power BI, se le tiene que definir la entrada para el archivo, para la cual hay que especificarle la ruta y cada archivo _.txt_ generado por el programa de python y asignarlo a cada parte que ya está especificada en el archivo de Power BI (Esto solo se tiene que hacer la primera vez).
-Aquí se puede ver un paso a paso de esta especificación de Power BI para la entrada:
+Aquí se puede ver un paso a paso de esta especificación de la entrada para Power BI:
 
-+ Primero, en la columna de la derecha donde dice _Fields_, se le da click derecho donde dice _events_
++ Primer paso_: En la columna de la derecha donde dice _Fields_, se le da click derecho donde dice _events_
 
   ![First_step](Images/First_step.png)
 
-+ En el menú despegable que se muestra, hay que seleccionar la opción que dice _Edit query_
++ Segundo paso: En el menú despegable que se muestra, hay que seleccionar la opción que dice _Edit query_
 
   ![Second_step](Images/Second_step.png)
 
-+ Luego, en la parte izquierda de la pantalla, en la columna llamada _Queries_, se muestran los tres archivos que se están esperando, por lo que hay que ir uno por uno y efectuar los dos siguientes pasos:
++ Tercer paso: En la parte izquierda de la pantalla, en la columna llamada _Queries_, se muestran los tres archivos que se están esperando, por lo que hay que ir uno por uno y efectuar los dos siguientes pasos:
   
   ![Third_step](Images/Third_step.png)
 
-+ En la columna derecha, llamada _Applied steps_, hay que seleccionar la opción que dice _Source_
+  + Cuarto paso: En la columna derecha, llamada _Applied steps_, hay que seleccionar la opción que dice _Source_.
   
-  ![Fourth_step](Images/Fourth_step.png) 
+    ![Fourth_step](Images/Fourth_step.png) 
 
-+ Se va a desplegar una ventana, en la cual al darle en el botón _browse_, va a abrir el explorador de archivos para especificar el archivo a abrir para esa parte específica del archivo de Power BI.
+  + Quinto paso: En la ventada desplegada, se presiona el botón _browse_, el cual va a abrir el explorador de archivos para especificar el archivo a abrir para esa parte específica del archivo de Power BI.
   
-  ![Fifth_step](Images/Fifth_step.png) 
-  ![Sixth_step](Images/Sixth_step.png)
+    ![Fifth_step1](Images/Fifth_step1.png) 
+    ![Fifth_step2](Images/Fifth_step2.png)
   
-  **Recordar que este paso se tiene que hacer para las tres partes: estados, formas y eventos.**  
+  **Recordar que el cuarto y quinto paso se tienen que hacer para las tres partes: estados, formas y eventos.**  
   _Cabe recalcar también que las capturas fueron tomadas con Power BI en inglés, por lo que los nombres de las columnas y opciones puede variar._
 
 ### **Salida del programa**
 
 + Archivos de salida:
 
-  Al efectuar la ejecución del programa detallada anteriormente, se van a generar tres archivos de salida, uno por cada parte del programa: estados, formas y eventos, cada uno conteniendo su parte correspondiente del análisis del archivo _xml_. También se genera la impresión en terminal del número de evento que ya fue procesado por el analizador. 
+  Al efectuar la ejecución del programa detallada anteriormente, se van a generar tres archivos de salida, uno por cada parte del programa: estados, formas y eventos, cada uno conteniendo su parte correspondiente del análisis del archivo _xml_.
 
 + Gráficos para ver la información:
 
-  Habiendo generado los archivos de salida _.txt_ correspondientes, éstos mismos archivos son los que toma el Power BI como su entrada para graficar la información. Teniendo ya acceso a esta información, en Power BI se muestran:
+  Habiendo generado los archivos de salida _.txt_ correspondientes, estos mismos archivos son los que toma el Power BI como su entrada para graficar la información. Teniendo ya acceso a esta información, en Power BI se muestran:
 
   - La lista de todos los eventos analizados.
   - Gráfico de la cantidad de eventos por estado.
