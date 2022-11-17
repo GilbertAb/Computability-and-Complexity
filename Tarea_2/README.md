@@ -11,7 +11,7 @@ Proponer un problema que no se pueda resolver en tiempo polinomial, es decir de 
 
 ### **1.1 Problema propuesto**
 
-El problema propuesto es la resolución del juego del sudoku mediante la heurística y metaheurística propuesta en el documento de especificación inicial, en el lenguaje de programación python. Se tomarán también las medidas del tiempo de los algoritmos de resolución para comparar rendimientos y eficiencia. Además, se van a graficar los resultados obtenidos en las pruebas y mediciones de la solución.
+El problema propuesto es la resolución del juego del sudoku mediante fuerza bruta, la heurística y metaheurística propuesta en el documento de especificación inicial, en el lenguaje de programación python. Se tomarán también las medidas del tiempo de los algoritmos de resolución para comparar rendimientos y eficiencia. Además, se van a graficar los resultados obtenidos en las pruebas y mediciones de la solución.
 
 ### **1.2 ¿En qué consiste el juego del sudoku?**
 
