@@ -15,7 +15,7 @@ El problema propuesto es la resolución del juego del sudoku mediante la heurís
 
 ### **1.2 ¿En qué consiste el juego del sudoku?**
 
-El sudoku es un juego matemático inventado en la década de 1970. Este juego consiste en rellenar una cuadrícula de 9x9 celdas (81) casillas dividida en subcuadrículas de 3x3, con números que van del 1 al 9, teniendo ya algunos números asignados en dicha cuadrícula. La regla primordial del juego es que estos números del 1 al 9 no deben repetirse ya sea en una misma fila, columna, o subcuadrícula 3x3 antes mencionada.
+El sudoku es un juego matemático inventado en la década de 1970. Este juego consiste en rellenar una cuadrícula de 9x9 celdas (81 casillas) dividida en subcuadrículas de 3x3, con números que van del 1 al 9, teniendo ya algunos números asignados en dicha cuadrícula. La regla primordial del juego es que estos números del 1 al 9 no deben repetirse ya sea en una misma fila, columna, o subcuadrícula 3x3 antes mencionada.
 
 # Créditos
 
