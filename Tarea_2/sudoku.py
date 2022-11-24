@@ -13,7 +13,7 @@ class Sudoku:
     
     def is_solution(self):
         # Check if there is any empty grid (0 value)
-        is_solution = self.empty_grid()
+        is_solution = not self.empty_grid()
 
         # Check rows
         is_solution = not self.are_duplicated_in_rows(self.solution)
@@ -42,8 +42,9 @@ class Sudoku:
         for row in board:
             duplicated_nums = {num for num in row if row.count(num) > 1}
             # if there's any duplicated num in the row
-            if (len(duplicated_nums) > 0):
+            if (len(duplicated_nums) > 0 and not 0 in duplicated_nums):
                 duplicated = True
+                print(duplicated_nums)
                 break
         return duplicated
     
@@ -81,7 +82,7 @@ class Sudoku:
     def are_duplicated_in_3x3_subgrid(self, grid):
         duplicated = False
         duplicated_nums = {num for num in grid if grid.count(num) > 1}
-        if (len(duplicated_nums) > 0):
+        if (len(duplicated_nums) > 0 and not 0 in duplicated_nums):
             duplicated = True
         return duplicated 
 
@@ -107,4 +108,8 @@ sudo = [
         [4,9,3,8,7,1,2,6,5],
         [1,7,5,6,2,4,3,8,9]]
 
-#print(Sudoku(sudo).is_solution())
+s = Sudoku(sudo)
+print(s.is_solution())
+#print(s.are_duplicated_in_rows(s.solution))
+#print(s.are_duplicated_in_columns())
+#print(s.are_duplicated_in_subgrids())
