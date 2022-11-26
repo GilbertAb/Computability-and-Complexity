@@ -1,3 +1,5 @@
+import copy
+
 BOARD_SIZE = 9
 SUBGRID_SIZE = 3
 
@@ -133,6 +135,43 @@ class Sudoku:
                 duplicates += row.count(dnum)-1
         return duplicates
 
+    def get_3x3_subgrids(self):
+        subgrids = []
+        subgrid = []
+        # Scroll grid in rows
+        for rgrid in range(SUBGRID_SIZE):
+            # Scroll grid in columns
+            for cgrid in range(SUBGRID_SIZE):
+                # Make Subgrid
+                for row in range(SUBGRID_SIZE):
+                    for column in range(SUBGRID_SIZE):
+                        subgrid.append(self.solution[row + SUBGRID_SIZE*rgrid][column + SUBGRID_SIZE*cgrid])
+                # Check subgrid
+                #print(subgrid)
+                subgrids.append(copy.copy(subgrid))
+                subgrid.clear()            
+        return subgrids
+    '''
+    indexes of subgrids:
+        |0|1|2|
+        |3|4|5|
+        |6|7|8|
+    '''
+    def set_3x3_subgrid(self, subgrid, index):
+        grid_row = 0
+        if (index > 2 and index < 6):
+            grid_row = 1
+        elif (index >= 6 and index < 10):
+            grid_row = 2
+        grid_col = 0
+        subgrid_index = 0
+        for row in range(SUBGRID_SIZE):
+            for column in range(SUBGRID_SIZE):
+                #print("SUBi",subgrid_index)
+                self.solution[row + SUBGRID_SIZE*grid_row][column + SUBGRID_SIZE*(index%3)] = subgrid[subgrid_index]
+                subgrid_index += 1
+        #self.print_solution()
+
 # Test count duplicates
 #sudo = [
 #        [2,8,9,3,6,4,6,9,3],
@@ -156,18 +195,23 @@ class Sudoku:
 #        [4,9,0,8,0,0,0,6,0],
 #        [0,0,0,6,0,4,3,8,0]]
 
-#sudo = [
-#        [8,6,1,2,4,7,5,9,3],
-#        [7,3,9,1,5,8,6,4,2],
-#        [2,5,4,9,6,3,1,7,8],
-#        [9,1,6,5,8,2,7,3,4],
-#        [5,8,7,4,3,6,9,2,1],
-#        [3,4,2,7,1,9,8,5,6],
-#        [6,2,8,3,9,5,4,1,7],
-#        [4,9,3,8,7,1,2,6,5],
-#        [1,7,5,6,2,4,3,8,9]]
+sudo = [
+        [8,6,1,2,4,7,5,9,3],
+        [7,3,9,1,5,8,6,4,2],
+        [2,5,4,9,6,3,1,7,8],
+        [9,1,6,5,8,2,7,3,4],
+        [5,8,7,4,3,6,9,2,1],
+        [3,4,2,7,1,9,8,5,6],
+        [6,2,8,3,9,5,4,1,7],
+        [4,9,3,8,7,1,2,6,5],
+        [1,7,5,6,2,4,3,8,9]]
 
 #s = Sudoku(sudo)
+#s.solution = sudo
+#s.get_3x3_subgrids()
+#s.set_3x3_subgrid([1,2,3,4,5,6,7,8,9],0)
+
+
 #s.count_duplicates()
 #s.print_sudoku()
 #print(s.is_solution())
