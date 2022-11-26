@@ -112,16 +112,49 @@ class Sudoku:
             duplicated = True
         return duplicated 
 
-sudo = [
-        [8,6,0,2,4,7,5,0,0],
-        [7,0,9,1,5,8,6,0,2],
-        [2,5,0,9,6,3,1,0,8],
-        [9,1,6,0,8,0,0,0,4],
-        [0,8,0,0,3,6,9,0,0],
-        [0,4,2,7,0,9,0,5,6],
-        [0,2,8,0,9,5,4,1,7],
-        [4,9,0,8,0,0,0,6,0],
-        [0,0,0,6,0,4,3,8,0]]
+    def count_duplicates(self):
+        # Duplicates in rows
+        duplicates = self.count_duplicates_in_rows(self.solution)   
+        # Duplicates in columns
+        columns = [[],[],[],[],[],[],[],[],[]]
+        # Extract and store columns
+        for i in range(BOARD_SIZE):
+            for j in range(BOARD_SIZE):  
+                columns[i].append(self.solution[j][i])
+        duplicates += self.count_duplicates_in_rows(columns)
+        #print(duplicates)
+        return duplicates
+        
+    def count_duplicates_in_rows(self, board):
+        duplicates = 0
+        for row in board:
+            duplicated_nums = {num for num in row if row.count(num) > 1}
+            for dnum in duplicated_nums:
+                duplicates += row.count(dnum)-1
+        return duplicates
+
+# Test count duplicates
+#sudo = [
+#        [2,8,9,3,6,4,6,9,3],
+#        [5,3,7,5,9,2,8,2,4],
+#        [6,4,1,8,1,7,7,1,5],
+#        [3,7,1,6,8,1,6,5,1],
+#        [2,8,6,9,3,7,7,4,8],
+#        [9,5,4,5,4,2,9,3,2],
+#        [8,7,5,1,2,4,4,3,9],
+#        [2,6,1,9,5,3,6,8,7],
+#        [9,4,3,8,7,6,5,2,1]]
+
+#sudo = [
+#        [8,6,0,2,4,7,5,0,0],
+#        [7,0,9,1,5,8,6,0,2],
+#        [2,5,0,9,6,3,1,0,8],
+#        [9,1,6,0,8,0,0,0,4],
+#        [0,8,0,0,3,6,9,0,0],
+#        [0,4,2,7,0,9,0,5,6],
+#        [0,2,8,0,9,5,4,1,7],
+#        [4,9,0,8,0,0,0,6,0],
+#        [0,0,0,6,0,4,3,8,0]]
 
 #sudo = [
 #        [8,6,1,2,4,7,5,9,3],
@@ -135,6 +168,7 @@ sudo = [
 #        [1,7,5,6,2,4,3,8,9]]
 
 #s = Sudoku(sudo)
+#s.count_duplicates()
 #s.print_sudoku()
 #print(s.is_solution())
 #print(s.are_duplicated_in_rows(s.solution))
