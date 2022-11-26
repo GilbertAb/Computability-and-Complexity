@@ -3,14 +3,40 @@ SUBGRID_SIZE = 3
 
 class Sudoku:
     def __init__(self, rows):
-        self.solution = []
+        # Board with fixed values
+        self.sudoku = []
         for row in range(len(rows)):
-            self.solution.append(rows[row])
+            self.sudoku.append(rows[row])
+        
+        # Board with solution
+        self.solution = []
+        for row in range(BOARD_SIZE):
+            self.solution.append([])
+            for column in range(BOARD_SIZE):
+                self.solution[row].append(0)
+
+    def print_board(self, board):
+        print("\n|-------|-------|-------|")
+        for row in range(BOARD_SIZE):
+            for column in range(BOARD_SIZE):
+                if (column % 3 == 2):
+                    print(board[row][column], "| ", end="")
+                elif (column == 0):
+                    print("|", board[row][column], end=" ")
+                else:
+                    print(board[row][column], "", end="")
+            if (row % 3 == 2):
+                print("\n|-------|-------|-------|")
+            else:
+                print("")
     
     def print_sudoku(self):
-        for row in self.solution:
-            print(row)
+        self.print_board(self.sudoku)
     
+    def print_solution(self):
+        self.print_board(self.solution)
+    
+
     def is_solution(self):
         # Check if there is any empty grid (0 value)
         is_solution = not self.empty_grid()
@@ -44,7 +70,7 @@ class Sudoku:
             # if there's any duplicated num in the row
             if (len(duplicated_nums) > 0 and not 0 in duplicated_nums):
                 duplicated = True
-                print(duplicated_nums)
+                #print(duplicated_nums)
                 break
         return duplicated
     
@@ -86,30 +112,31 @@ class Sudoku:
             duplicated = True
         return duplicated 
 
-#sudo = [
-#        [8,6,0,2,4,7,5,0,0],
-#        [7,0,9,1,5,8,6,0,2],
-#        [2,5,0,9,6,3,1,0,8],
-#        [9,1,6,0,8,0,0,0,4],
-#        [0,8,0,0,3,6,9,0,0],
-#        [0,4,2,7,0,9,0,5,6],
-#        [0,2,8,0,9,5,4,1,7],
-#        [4,9,0,8,0,0,0,6,0],
-#        [0,0,0,6,0,4,3,8,0]]
-
 sudo = [
-        [8,6,1,2,4,7,5,9,3],
-        [7,3,9,1,5,8,6,4,2],
-        [2,5,4,9,6,3,1,7,8],
-        [9,1,6,5,8,2,7,3,4],
-        [5,8,7,4,3,6,9,2,1],
-        [3,4,2,7,1,9,8,5,6],
-        [6,2,8,3,9,5,4,1,7],
-        [4,9,3,8,7,1,2,6,5],
-        [1,7,5,6,2,4,3,8,9]]
+        [8,6,0,2,4,7,5,0,0],
+        [7,0,9,1,5,8,6,0,2],
+        [2,5,0,9,6,3,1,0,8],
+        [9,1,6,0,8,0,0,0,4],
+        [0,8,0,0,3,6,9,0,0],
+        [0,4,2,7,0,9,0,5,6],
+        [0,2,8,0,9,5,4,1,7],
+        [4,9,0,8,0,0,0,6,0],
+        [0,0,0,6,0,4,3,8,0]]
 
-s = Sudoku(sudo)
-print(s.is_solution())
+#sudo = [
+#        [8,6,1,2,4,7,5,9,3],
+#        [7,3,9,1,5,8,6,4,2],
+#        [2,5,4,9,6,3,1,7,8],
+#        [9,1,6,5,8,2,7,3,4],
+#        [5,8,7,4,3,6,9,2,1],
+#        [3,4,2,7,1,9,8,5,6],
+#        [6,2,8,3,9,5,4,1,7],
+#        [4,9,3,8,7,1,2,6,5],
+#        [1,7,5,6,2,4,3,8,9]]
+
+#s = Sudoku(sudo)
+#s.print_sudoku()
+#print(s.is_solution())
 #print(s.are_duplicated_in_rows(s.solution))
 #print(s.are_duplicated_in_columns())
 #print(s.are_duplicated_in_subgrids())
