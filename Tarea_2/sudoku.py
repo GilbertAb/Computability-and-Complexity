@@ -1,4 +1,5 @@
 import copy
+import random
 
 BOARD_SIZE = 9
 SUBGRID_SIZE = 3
@@ -163,7 +164,7 @@ class Sudoku:
             grid_row = 1
         elif (index >= 6 and index < 10):
             grid_row = 2
-        grid_col = 0
+        
         subgrid_index = 0
         for row in range(SUBGRID_SIZE):
             for column in range(SUBGRID_SIZE):
@@ -171,6 +172,37 @@ class Sudoku:
                 self.solution[row + SUBGRID_SIZE*grid_row][column + SUBGRID_SIZE*(index%3)] = subgrid[subgrid_index]
                 subgrid_index += 1
         #self.print_solution()
+
+    def swap_2_values(self, subgrid_index):
+        if subgrid_index < 3:
+            # 0 -> [0-2], [0-2] 
+            # 1 -> [0-2], [3-5] 
+            # 2 -> [0-2], [6-8] 
+            self.swap(0)
+
+        elif subgrid_index > 2 and subgrid_index < 6:
+            # 3 -> [3-5], [0-2] 
+            # 4 -> [3-5], [3-5] 
+            # 5 -> [3-5], [6-8] 
+            self.swap(1)
+        elif subgrid_index > 5 and subgrid_index < 9:
+            # 6 -> [6-8], [0-2] 
+            # 7 -> [6-8], [3-5] 
+            # 8 -> [6-8], [6-8] 
+            self.swap(2)
+    
+    # Grid_row is the row where the 3x3 subgrid is located (0, 1 or 2)
+    def swap(self, grid_row):
+
+        row_1 = random.randrange(0, 3) + grid_row*SUBGRID_SIZE
+        column_1 = random.randrange(0, 3) + ((row_1 - grid_row*SUBGRID_SIZE) * SUBGRID_SIZE)
+        row_2 = random.randrange(0, 3) + grid_row*SUBGRID_SIZE
+        column_2 = random.randrange(0, 3) + ((row_1 - grid_row*SUBGRID_SIZE) * SUBGRID_SIZE)
+        #print(row_1, column_1)
+        #print(row_2, column_2)
+        aux = self.solution[row_1][column_1]
+        self.solution[row_1][column_1] = self.solution[row_2][column_2]
+        self.solution[row_2][column_2] = aux
 
 # Test count duplicates
 #sudo = [
@@ -210,8 +242,9 @@ sudo = [
 #s.solution = sudo
 #s.get_3x3_subgrids()
 #s.set_3x3_subgrid([1,2,3,4,5,6,7,8,9],0)
-
-
+#s.print_solution()
+#s.swap_2_values(0)
+#s.print_solution()
 #s.count_duplicates()
 #s.print_sudoku()
 #print(s.is_solution())
