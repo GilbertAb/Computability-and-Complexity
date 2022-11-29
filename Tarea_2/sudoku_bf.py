@@ -3,7 +3,7 @@ from random import choice
 BOARD_SIZE = 9
 SUBGRID_SIZE = 3
 
-class Sudoku_BT:
+class Sudoku_BF:
     def __init__(self, rows):
         self.solution = []
         for row in range(len(rows)):
@@ -193,7 +193,7 @@ sudo = [
 #         [4,9,3,8,7,1,2,6,5],
 #         [1,7,5,6,2,4,3,8,9]]
 
-s = Sudoku_BT(sudo)
+s = Sudoku_BF(sudo)
 s.resolve()
 #print(s.solution)
 if s.is_solution():
