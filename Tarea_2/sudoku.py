@@ -32,40 +32,41 @@ class Sudoku:
                 print("\n|-------|-------|-------|")
             else:
                 print("")
-    
+    # Print board with fixed values
     def print_sudoku(self):
         self.print_board(self.sudoku)
-    
+
+    # Print board with solution
     def print_solution(self):
         self.print_board(self.solution)
     
-
+    # Returns if solution's board is a valid solution
     def is_solution(self):
         # Check if there is any empty grid (0 value)
         is_solution = not self.empty_grid()
 
         # Check rows
         is_solution = not self.are_duplicated_in_rows(self.solution)
-        #print("ROWS: ", is_solution)
         
         # Check columns
         if is_solution != False:
             is_solution = not self.are_duplicated_in_columns()
-        #print("COLUMNS: ", is_solution)
         
         # Check 3x3 subgrids
         if is_solution != False:
             is_solution = not self.are_duplicated_in_subgrids()
-        #print("GRIDS: ", is_solution)
         
         return is_solution
 
+    # Returns True if there is an empty grid (equal 0) in the solution,
+    # otherwise returns False
     def empty_grid(self):
         for row in self.solution:
             if 0 in row:
                 return True
         return False
-
+    # Returns True if there is any duplicated number in any row of the board,
+    # otherwise returns false
     def are_duplicated_in_rows(self, board):
         duplicated = False
         for row in board:
@@ -73,10 +74,10 @@ class Sudoku:
             # if there's any duplicated num in the row
             if (len(duplicated_nums) > 0 and not 0 in duplicated_nums):
                 duplicated = True
-                #print(duplicated_nums)
                 break
         return duplicated
-    
+    # Returns True if there is any duplicated number in any column of the board,
+    # otherwise returns false
     def are_duplicated_in_columns(self):
         duplicated = False
         columns = [[],[],[],[],[],[],[],[],[]]
@@ -88,6 +89,8 @@ class Sudoku:
         duplicated = self.are_duplicated_in_rows(columns)
         return duplicated
     
+    # Returns True if there is any duplicated number in any 3x3 subgrid of the board,
+    # otherwise returns false
     def are_duplicated_in_subgrids(self):
         duplicated = False
         subgrid = []
@@ -107,14 +110,17 @@ class Sudoku:
                         break;
             
         return duplicated
-
+    # Returns True if there is any duplicated number in an specific 3x3 subgrid of the board,
+    # otherwise returns false
     def are_duplicated_in_3x3_subgrid(self, grid):
         duplicated = False
-        duplicated_nums = {num for num in grid if grid.count(num) > 1}
+        duplicated_nums = {num for num in grid if grid.count(num) > 1 and num != 0}
         if (len(duplicated_nums) > 0 and not 0 in duplicated_nums):
             duplicated = True
         return duplicated 
 
+    # Returns the amount of duplicated numbers in the solution
+    # Is used to get the FITNESS for the genetic algorithm
     def count_duplicates(self):
         # Duplicates in rows
         duplicates = self.count_duplicates_in_rows(self.solution)   
@@ -125,9 +131,9 @@ class Sudoku:
             for j in range(BOARD_SIZE):  
                 columns[i].append(self.solution[j][i])
         duplicates += self.count_duplicates_in_rows(columns)
-        #print(duplicates)
         return duplicates
-        
+    
+    # Returns the amount of duplicated numbers in the rows of the solution
     def count_duplicates_in_rows(self, board):
         duplicates = 0
         for row in board:
@@ -135,7 +141,8 @@ class Sudoku:
             for dnum in duplicated_nums:
                 duplicates += row.count(dnum)-1
         return duplicates
-
+    
+    # Returns the 3x3 subgrids of the solution
     def get_3x3_subgrids(self):
         subgrids = []
         subgrid = []
@@ -148,31 +155,33 @@ class Sudoku:
                     for column in range(SUBGRID_SIZE):
                         subgrid.append(self.solution[row + SUBGRID_SIZE*rgrid][column + SUBGRID_SIZE*cgrid])
                 # Check subgrid
-                #print(subgrid)
                 subgrids.append(copy.copy(subgrid))
                 subgrid.clear()            
         return subgrids
+    
     '''
     indexes of subgrids:
         |0|1|2|
         |3|4|5|
         |6|7|8|
     '''
+    # Sets a new value (subgrid) to a 3x3 subgrid
+    # Is used for CROSSOVER of the genetic algorithm
     def set_3x3_subgrid(self, subgrid, index):
         grid_row = 0
         if (index > 2 and index < 6):
             grid_row = 1
         elif (index >= 6 and index < 10):
             grid_row = 2
-        
+                
         subgrid_index = 0
         for row in range(SUBGRID_SIZE):
             for column in range(SUBGRID_SIZE):
-                #print("SUBi",subgrid_index)
                 self.solution[row + SUBGRID_SIZE*grid_row][column + SUBGRID_SIZE*(index%3)] = subgrid[subgrid_index]
                 subgrid_index += 1
-        #self.print_solution()
 
+    # Randomly swaps two values within a 3x3 subgrid
+    # Is used for MUTATION of the genetic algorithm
     def swap_2_values(self, subgrid_index):
         if subgrid_index < 3:
             # 0 -> [0-2], [0-2] 
@@ -191,6 +200,7 @@ class Sudoku:
             # 8 -> [6-8], [6-8] 
             self.swap(2)
     
+    # Swap two values within a 3x3 subgrid
     # Grid_row is the row where the 3x3 subgrid is located (0, 1 or 2)
     def swap(self, grid_row):
 
@@ -198,56 +208,7 @@ class Sudoku:
         column_1 = random.randrange(0, 3) + ((row_1 - grid_row*SUBGRID_SIZE) * SUBGRID_SIZE)
         row_2 = random.randrange(0, 3) + grid_row*SUBGRID_SIZE
         column_2 = random.randrange(0, 3) + ((row_1 - grid_row*SUBGRID_SIZE) * SUBGRID_SIZE)
-        #print(row_1, column_1)
-        #print(row_2, column_2)
+        # Swap
         aux = self.solution[row_1][column_1]
         self.solution[row_1][column_1] = self.solution[row_2][column_2]
         self.solution[row_2][column_2] = aux
-
-# Test count duplicates
-#sudo = [
-#        [2,8,9,3,6,4,6,9,3],
-#        [5,3,7,5,9,2,8,2,4],
-#        [6,4,1,8,1,7,7,1,5],
-#        [3,7,1,6,8,1,6,5,1],
-#        [2,8,6,9,3,7,7,4,8],
-#        [9,5,4,5,4,2,9,3,2],
-#        [8,7,5,1,2,4,4,3,9],
-#        [2,6,1,9,5,3,6,8,7],
-#        [9,4,3,8,7,6,5,2,1]]
-
-#sudo = [
-#        [8,6,0,2,4,7,5,0,0],
-#        [7,0,9,1,5,8,6,0,2],
-#        [2,5,0,9,6,3,1,0,8],
-#        [9,1,6,0,8,0,0,0,4],
-#        [0,8,0,0,3,6,9,0,0],
-#        [0,4,2,7,0,9,0,5,6],
-#        [0,2,8,0,9,5,4,1,7],
-#        [4,9,0,8,0,0,0,6,0],
-#        [0,0,0,6,0,4,3,8,0]]
-
-sudo = [
-        [8,6,1,2,4,7,5,9,3],
-        [7,3,9,1,5,8,6,4,2],
-        [2,5,4,9,6,3,1,7,8],
-        [9,1,6,5,8,2,7,3,4],
-        [5,8,7,4,3,6,9,2,1],
-        [3,4,2,7,1,9,8,5,6],
-        [6,2,8,3,9,5,4,1,7],
-        [4,9,3,8,7,1,2,6,5],
-        [1,7,5,6,2,4,3,8,9]]
-
-#s = Sudoku(sudo)
-#s.solution = sudo
-#s.get_3x3_subgrids()
-#s.set_3x3_subgrid([1,2,3,4,5,6,7,8,9],0)
-#s.print_solution()
-#s.swap_2_values(0)
-#s.print_solution()
-#s.count_duplicates()
-#s.print_sudoku()
-#print(s.is_solution())
-#print(s.are_duplicated_in_rows(s.solution))
-#print(s.are_duplicated_in_columns())
-#print(s.are_duplicated_in_subgrids())
