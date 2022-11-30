@@ -1,6 +1,7 @@
 from sudoku import Sudoku
-import random
 import copy
+import random
+import time
 
 BOARD_SIZE = 9
 SUBGRID_SIZE = 3
@@ -29,24 +30,19 @@ class SudokuGA:
         """
         Start the GA to solve the objects
         """
-        #values_to_set = self._load().get_initial_values()
+        start = time.time()
 
-        best_data = []
-        worst_data = []
         found = False
         overall_num_generations_done = 0
-        restart_counter = 0
         population=[]
         while overall_num_generations_done < self.max_num_generations and not found:
             population = self.create_population(sudoku)
-            print("Population:", len(population))
+            print("POPULATION")
             num_generations_done = 0
-            remember_the_best = 0
-            num_generations_without_improvement = 0
 
             # Loop until max allowed generations is reached or a solution is found
             while num_generations_done < self.max_num_generations and not found:
-                print(num_generations_done)
+                #print(num_generations_done)
                 # Rank the solutions
                 ranked_population = self.fitness(population)
                 best_solution = ranked_population[0]
@@ -68,7 +64,6 @@ class SudokuGA:
         if not found:
             print("Problem not solved after {} generations. Printing best and worst results below".
                   format(overall_num_generations_done))
-            #ranked_population = ga_utils.rank_population(new_population)
             ranked_population = self.fitness(population)
             best_solution = ranked_population[0]
             worst_solution = ranked_population[-1]
@@ -76,10 +71,11 @@ class SudokuGA:
             print(best_solution.count_duplicates())
             best_solution.print_solution()
             print("Worst is:")
+            print(worst_solution.count_duplicates())
             worst_solution.print_solution()
 
-        #graphics.draw_best_worst_fitness_scores(best_data, worst_data)
-
+        end = time.time()
+        print("TIME: ", end-start, "seconds")
     # Create population
     def create_population(self, sudoku):
         population = []
@@ -89,18 +85,22 @@ class SudokuGA:
 
     def create_individual(self, sudoku):
         individual = Sudoku(sudoku)
-        sudoku_solution = individual.solution
-        # TODO: avoid duplicated values in 3x3 grid
-        #values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        
+        individual.solution = sudoku
+
         for row in range(BOARD_SIZE):
             for column in range(BOARD_SIZE):
-                random_val = random.randrange(1, 10)
                 if (individual.sudoku[row][column] == 0):
-                    sudoku_solution[row][column] = random_val
-                else:
-                    sudoku_solution[row][column] = sudoku[row][column]
-        individual.solution = sudoku_solution
+                    # Fill randomly but AVOID duplicates within 3x3 subgrids
+                    found = False
+                    valid_values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                    while not found:
+                        random_val = random.choice(valid_values)
+                        individual.solution[row][column] = random_val
+                        if not individual.are_duplicated_in_subgrids():
+                            found = True
+                        else:
+                            valid_values.remove(random_val)
+
         return copy.copy(individual)
     
     # Calculate fitness and Order by fitness
@@ -160,7 +160,8 @@ class SudokuGA:
             mutated_population.append(individual)
         return mutated_population
 
-sudo = [
+# Easy
+sudo_e = [
         [8,6,0,2,4,7,5,0,0],
         [7,0,9,1,5,8,6,0,2],
         [2,5,0,9,6,3,1,0,8],
@@ -171,13 +172,19 @@ sudo = [
         [4,9,0,8,0,0,0,6,0],
         [0,0,0,6,0,4,3,8,0]]
 
-#pop = create_population(sudo, 5)
-ag = SudokuGA(population_size=20, selection_rate=0.25, random_selection_rate=0.25,
-            num_children=4, max_num_generations=2000, mutation_rate=0.25, model_to_solve=0,
+# Hard
+sudo_h = [
+        [8,2,3,0,0,0,0,7,6],
+        [0,0,9,0,0,0,0,0,0],
+        [6,4,5,2,0,9,1,8,3],
+        [0,0,0,0,1,7,4,6,0],
+        [0,0,0,8,0,6,0,3,0],
+        [0,6,7,4,0,2,8,0,5],
+        [4,7,8,6,0,0,0,0,0],
+        [0,0,0,9,8,0,2,4,0],
+        [0,0,0,0,0,0,0,0,8]]
+
+ag = SudokuGA(population_size=5000, selection_rate=0.25, random_selection_rate=0.25,
+            num_children=4, max_num_generations=500, mutation_rate=0.25, model_to_solve=0,
             presolving=0, restart_after_n_generations_without_improvement=20)
-ag.run(sudo)
-# Print population
-#for i in pop:
-#    i.print_solution()
-#    i.print_sudoku()
-#    print("\n")
+ag.run(sudo_e)
