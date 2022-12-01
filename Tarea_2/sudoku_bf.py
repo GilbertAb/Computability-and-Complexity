@@ -180,8 +180,8 @@ s.resolve()
 end = time.time()
 print("TIME: ", end-start, "seconds")
 if s.is_solution():
-    print(s.solution)
+    s.print_sudoku()
     print("ITS A SOLUTION")
 else:
-    print(s.solution)
+    s.print_sudoku()
     print("Is not a solution")
